@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1249" version="1">
+    <metadata>
+      <title>WN16-UR-000230</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73787" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47022-9" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Increase scheduling priority user right must only be assigned to the Administrators group.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Increase scheduling priority - Administrators" test_ref="oval:mil.disa.stig.windows:tst:124900"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:124901" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:124901" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_test check="all" comment="Increase scheduling priority - Administrators" id="oval:mil.disa.stig.windows:tst:124900" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124900"/>
+  </win:accesstoken_test>
+  <win:accesstoken_state comment="Increase scheduling priority" id="oval:mil.disa.stig.windows:ste:124900" version="1">
+    <win:seincreasebasepriorityprivilege datatype="boolean" operation="equals">0</win:seincreasebasepriorityprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="Filter for Administrators" id="oval:mil.disa.stig.windows:obj:124900" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:124901</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:124901</filter>
+    </set>
+  </win:accesstoken_object>
+</def-group>

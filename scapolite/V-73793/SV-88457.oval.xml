@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1252" version="2">
+    <metadata>
+      <title>WN16-UR-000260</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73793" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46078-2" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Manage auditing and security log user right must only be assigned to the Administrators group.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Manage auditing and security log - Administrators" test_ref="oval:mil.disa.stig.windows:tst:125200"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_object comment="Administrators only" id="oval:mil.disa.stig.windows:obj:125200" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:125201</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:125201</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:125201" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:125201" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Manage auditing and security log" id="oval:mil.disa.stig.windows:ste:125200" version="1">
+    <win:sesecurityprivilege datatype="boolean" operation="equals">0</win:sesecurityprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_test check="all" check_existence="any_exist" comment="Manage auditing and security log - Administrators" id="oval:mil.disa.stig.windows:tst:125200" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:125200"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:125200"/>
+  </win:accesstoken_test>
+</def-group>

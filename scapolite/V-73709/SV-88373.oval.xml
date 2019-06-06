@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:tst:462700'
+- 'oval:mil.disa.fso.windows:obj:462700'
+- 'oval:mil.disa.fso.windows:ste:452700'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1226" version="1">
+    <metadata>
+      <title>UIAccess applications must not be allowed to prompt for elevation without using the secure desktop.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73709" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46911-4" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>UIAccess applications must not be allowed to prompt for elevation without using the secure desktop.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Windows2012 User Account Control: Allow UI Access applications to prompt for elevation without using the secure desktop check." definition_ref="oval:mil.disa.fso.windows:def:4627"/>
+    </criteria>
+  </definition>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4627" version="1">
+    <metadata>
+      <title>UAC - UIAccess Secure Desktop</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="15991" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-23295-9" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>UIAccess applications must not be allowed to prompt for elevation without using the secure desktop.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'User Account Control: Allow UIAccess applications to prompt for elevation without using the secure desktop' is set to 'Disabled'" test_ref="oval:mil.disa.fso.windows:tst:462700"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'User Account Control: Allow UIAccess applications to prompt for elevation without using the secure desktop' is set to 'Disabled'" id="oval:mil.disa.fso.windows:tst:462700" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:462700"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:452700"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:462700" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Microsoft\Windows\CurrentVersion\Policies\System</win:key>
+    <win:name datatype="string">EnableUIADesktopToggle</win:name>
+  </win:registry_object>
+  <win:registry_state comment="Reg_Dword type and value equals 0" id="oval:mil.disa.fso.windows:ste:452700" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">0</win:value>
+  </win:registry_state>
+</def-group>

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1262" version="1">
+    <metadata>
+      <title>Search - Encrypted Files Indexing</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>Indexing of encrypted files must be turned off.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Allow indexing of encrypted files' is set to 'Disabled'" test_ref="oval:mil.disa.stig.windows:tst:126200"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Allow indexing of encrypted files' is set to 'Disabled'" id="oval:mil.disa.stig.windows:tst:126200" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:126200"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:126200"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value 0 to disable indexing of encrypted files" id="oval:mil.disa.stig.windows:ste:126200" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int">0</win:value>
+  </win:registry_state>
+  <win:registry_object comment="HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowIndexingEncryptedStoresOrItems" id="oval:mil.disa.stig.windows:obj:126200" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Policies\Microsoft\Windows\Windows Search</win:key>
+    <win:name datatype="string">AllowIndexingEncryptedStoresOrItems</win:name>
+  </win:registry_object>
+</def-group>

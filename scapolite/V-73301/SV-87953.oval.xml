@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:obj:126500'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1266" version="1">
+    <metadata>
+      <title>WN16-00-000420</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>Windows PowerShell 2.0 must not be installed.</description>
+    </metadata>
+    <criteria>
+      <criteria comment="Determine if Windows PowerShell 2.0 feature is not installed" operator="AND">
+        <criterion comment="Verifies the Windows PowerShell 2.0 Engine server feature is not installed" test_ref="oval:mil.disa.stig.windows:tst:126600"/>
+      </criteria>
+    </criteria>
+  </definition>
+  <win:wmi57_test check="all" check_existence="all_exist" comment="Windows PowerShell 2.0 Engine server feature is not installed" id="oval:mil.disa.stig.windows:tst:126600" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:126500"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:126600"/>
+  </win:wmi57_test>
+  <win:wmi57_object comment="Select the ids from 'Get-WindowsFeature | Where Installed'" id="oval:mil.disa.stig.windows:obj:126500" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT id FROM win32_serverfeature</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_state comment="ID 411 (Windows PowerShell 2.0 Engine) is NOT in the result set" id="oval:mil.disa.stig.windows:ste:126600" version="1">
+    <win:result datatype="record" operation="equals">
+      <field datatype="int" entity_check="none satisfy" name="id">411</field>
+    </win:result>
+  </win:wmi57_state>
+</def-group>

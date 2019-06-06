@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1242" version="1">
+    <metadata>
+      <title>WN16-UR-000100</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73749" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44705-2" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Create global objects user right must only be assigned to Administrators, Service, Local Service, and Network Service.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Create global objects - Administrators, Service, Local Service, Network Service" test_ref="oval:mil.disa.stig.windows:tst:124200"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_test check="all" comment="Create global objects - Administrators, Service, Local Service, Network Service" id="oval:mil.disa.stig.windows:tst:124200" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124200"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124200"/>
+  </win:accesstoken_test>
+  <win:accesstoken_state comment="Network Service" id="oval:mil.disa.stig.windows:ste:124203" version="1">
+    <win:security_principle datatype="string" operation="equals">NETWORK SERVICE</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:124201" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_object comment="Filter for Administrators, Service, Local Service and Network Service" id="oval:mil.disa.stig.windows:obj:124200" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:124201</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:124201</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124202</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124203</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124204</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Service" id="oval:mil.disa.stig.windows:ste:124204" version="1">
+    <win:security_principle datatype="string" operation="equals">SERVICE</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:124201" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Local Service" id="oval:mil.disa.stig.windows:ste:124202" version="1">
+    <win:security_principle datatype="string" operation="equals">LOCAL SERVICE</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Create global objects" id="oval:mil.disa.stig.windows:ste:124200" version="1">
+    <win:secreateglobalprivilege datatype="boolean" operation="equals">0</win:secreateglobalprivilege>
+  </win:accesstoken_state>
+</def-group>

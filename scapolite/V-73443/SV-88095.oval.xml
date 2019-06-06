@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:tst:11900'
+- 'oval:mil.disa.stig.windows:ste:11901'
+- 'oval:mil.disa.fso.windows:obj:394100'
+- 'oval:mil.disa.stig.windows:tst:11901'
+- 'oval:mil.disa.stig.windows:ste:11900'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1267" version="1">
+    <metadata>
+      <title>WN16-AU-000220</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>Windows Server 2016 must be configured to audit Logon/Logoff - Account Lockout successes.</description>
+    </metadata>
+    <criteria comment="Audit - Account Lockout - Success" operator="OR">
+      <extend_definition comment="Is Audit - Logon/Logoff - Account Lockout set to audit successes" definition_ref="oval:mil.disa.stig.windows:def:119"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="'Audit Account Lockout' is set to 'Success'" id="oval:mil.disa.stig.windows:tst:11900" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:394100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:11900"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_state comment="'Account Lockout' is set to 'Success' and 'Failure'" id="oval:mil.disa.stig.windows:ste:11901" version="1">
+    <win:account_lockout datatype="string">AUDIT_SUCCESS_FAILURE</win:account_lockout>
+  </win:auditeventpolicysubcategories_state>
+  <win:auditeventpolicysubcategories_object comment="Audit event subcategories policy" id="oval:mil.disa.fso.windows:obj:394100" version="1"/>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:119" version="1">
+    <metadata>
+      <title>WN10-AU-000055</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 8</platform>
+        <platform>Microsoft Windows 10</platform>
+      </affected>
+      <description>The system must be configured to audit Logon/Logoff - Account Lockout successes.</description>
+    </metadata>
+    <criteria comment="Audit - Special Logon - Success" operator="OR">
+      <criterion comment="Audit - Account Lockout - Success only" test_ref="oval:mil.disa.stig.windows:tst:11900"/>
+      <criterion comment="Audit - Account Lockout - Success and Failure" test_ref="oval:mil.disa.stig.windows:tst:11901"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="'Audit Account Lockout' is set to 'Success' and 'Failure'" id="oval:mil.disa.stig.windows:tst:11901" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:394100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:11901"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_state comment="'Account Lockout' is set to 'Success'" id="oval:mil.disa.stig.windows:ste:11900" version="1">
+    <win:account_lockout datatype="string">AUDIT_SUCCESS</win:account_lockout>
+  </win:auditeventpolicysubcategories_state>
+</def-group>

@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:obj:101500'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1017" version="1">
+    <metadata>
+      <title>Minimum Password Length</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73321" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46914-8" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Passwords must, at a minimum, be 14 characters.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Minimum password length' is set to at least '14' characters" test_ref="oval:mil.disa.stig.windows:tst:101700"/>
+    </criteria>
+  </definition>
+  <external_variable comment="Minimum Password Length" datatype="int" id="oval:mil.disa.stig.windows:var:101700" version="1">
+    <possible_value hint="8_characters">8</possible_value>
+    <possible_value hint="9_characters">9</possible_value>
+    <possible_value hint="12_characters">12</possible_value>
+    <possible_value hint="14_characters">14</possible_value>
+    <possible_value hint="15_characters">15</possible_value>
+  </external_variable>
+  <win:passwordpolicy_object comment="Password policy" id="oval:mil.disa.stig.windows:obj:101500" version="1"/>
+  <win:passwordpolicy_state comment="Minimum Password Length is greater than or equal to variable" id="oval:mil.disa.stig.windows:ste:101700" version="1">
+    <win:min_passwd_len datatype="int" operation="greater than or equal" var_ref="oval:mil.disa.stig.windows:var:101700"/>
+  </win:passwordpolicy_state>
+  <win:passwordpolicy_test check="all" check_existence="at_least_one_exists" comment="'Minimum password length' is set to at least '14' characters" id="oval:mil.disa.stig.windows:tst:101700" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:101500"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:101700"/>
+  </win:passwordpolicy_test>
+</def-group>

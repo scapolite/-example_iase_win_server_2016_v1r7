@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1216" version="2">
+    <metadata>
+      <title>Windows Server 2016 must be configured to force users to log off when their allowed logon hours expire.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73689" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46389-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The system must be configured to force users to log off when their allowed logon hours expire.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Eventvwr.exe: Read and Execute rights for Administrators, System, Users, All Application Packages" test_ref="oval:mil.disa.stig.windows:tst:121600"/>
+    </criteria>
+  </definition>
+  <win:lockoutpolicy_test check="all" check_existence="at_least_one_exists" comment="'Network security: Force logoff when logon hours expire' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:121600" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:442300"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:121600"/>
+  </win:lockoutpolicy_test>
+  <win:lockoutpolicy_state comment="Force Logoff equals variable" id="oval:mil.disa.stig.windows:ste:121600" version="2">
+    <win:force_logoff datatype="int" operation="equals">0</win:force_logoff>
+  </win:lockoutpolicy_state>
+  <win:lockoutpolicy_object comment="Lockout policy" id="oval:mil.disa.fso.windows:obj:442300" version="2"/>
+</def-group>

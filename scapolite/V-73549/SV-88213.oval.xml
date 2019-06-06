@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1099" version="1">
+    <metadata>
+      <title>WN16-CC-000270</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73549" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46970-0" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Autoplay must be disabled for all drives.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Turn off AutoPlay' is set to 'Enabled' with 'All Drives' selected" test_ref="oval:mil.disa.stig.windows:tst:109900"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="all_exist" comment="'Turn off AutoPlay' is set to 'Enabled' with 'All Drives' selected" id="oval:mil.disa.stig.windows:tst:109900" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:109900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:109900"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:109900" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer</win:key>
+    <win:name datatype="string">NoDriveTypeAutoRun</win:name>
+  </win:registry_object>
+  <win:registry_state comment="Reg_Dword type and value equals 255" id="oval:mil.disa.stig.windows:ste:109900" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">255</win:value>
+  </win:registry_state>
+</def-group>

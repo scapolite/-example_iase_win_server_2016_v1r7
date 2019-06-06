@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:69" version="2">
+    <metadata>
+      <title>The display of slide shows on the lock screen must be disabled.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 8</platform>
+        <platform>Microsoft Windows 10</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The display of slide shows on the lock screen must be disabled.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Prevent enabling lock screen slide show' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:6900"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="NoLockScreenSlideshow = 1 (reg_dword)" id="oval:mil.disa.stig.windows:ste:6900" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int">1</win:value>
+  </win:registry_state>
+  <win:registry_object comment="Registry object for HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization\NoLockScreenSlideshow" id="oval:mil.disa.stig.windows:obj:6900" version="2">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Policies\Microsoft\Windows\Personalization</win:key>
+    <win:name datatype="string">NoLockScreenSlideshow</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="Verifies 'Prevent enabling lock screen slide show' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:6900" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:6900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:6900"/>
+  </win:registry_test>
+</def-group>

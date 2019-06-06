@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1248" version="1">
+    <metadata>
+      <title>WN16-UR-000220</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73785" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44804-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Impersonate a client after authentication user right must only be assigned to Administrators, Service, Local Service, and Network Service.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Impersonate a client after authentication - Administrators, SERVICE, LOCAL SERVICE, NETWORK SERVICE" test_ref="oval:mil.disa.stig.windows:tst:124800"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_state comment="NETWORK SERVICE" id="oval:mil.disa.stig.windows:ste:124803" version="1">
+    <win:security_principle datatype="string" operation="equals">NETWORK SERVICE</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="SERVICE" id="oval:mil.disa.stig.windows:ste:124804" version="1">
+    <win:security_principle datatype="string" operation="equals">SERVICE</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Impersonate a client after authentication" id="oval:mil.disa.stig.windows:ste:124800" version="1">
+    <win:seimpersonateprivilege datatype="boolean" operation="equals">0</win:seimpersonateprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="Filter for Administrators, Service, Local Service and Network Service" id="oval:mil.disa.stig.windows:obj:124800" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:124801</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:124801</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124802</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124803</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124804</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:124801" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_test check="all" comment="Impersonate a client after authentication - Administrators, SERVICE, LOCAL SERVICE, NETWORK SERVICE" id="oval:mil.disa.stig.windows:tst:124800" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124800"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124800"/>
+  </win:accesstoken_test>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:124801" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="LOCAL SERVICE" id="oval:mil.disa.stig.windows:ste:124802" version="1">
+    <win:security_principle datatype="string" operation="equals">LOCAL SERVICE</win:security_principle>
+  </win:accesstoken_state>
+</def-group>

@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:obj:459600'
+- 'oval:mil.disa.fso.windows:tst:459601'
+- 'oval:mil.disa.fso.windows:tst:459600'
+- 'oval:mil.disa.fso.windows:ste:459501'
+- 'oval:mil.disa.fso.windows:ste:459500'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1220" version="1">
+    <metadata>
+      <title>Session security for NTLM SSP-based servers must be configured to require NTLMv2 session security and 128-bit encryption.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73697" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46160-8" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The system must be configured to meet the minimum session security requirement for NTLM SSP based servers.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Windows2012 Session security for NTLM SSP-based servers check." definition_ref="oval:mil.disa.fso.windows:def:4596"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:459600" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0</win:key>
+    <win:name datatype="string">NTLMMinServerSec</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require 128-bit encryption'" id="oval:mil.disa.fso.windows:tst:459601" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:459600"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:459501"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require NTLMv2 session security'" id="oval:mil.disa.fso.windows:tst:459600" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:459600"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:459500"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value bitwise and 536870912" id="oval:mil.disa.fso.windows:ste:459501" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="bitwise and">536870912</win:value>
+  </win:registry_state>
+  <win:registry_state comment="Reg_Dword type and value bitwise and 524288" id="oval:mil.disa.fso.windows:ste:459500" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="bitwise and">524288</win:value>
+  </win:registry_state>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4596" version="1">
+    <metadata>
+      <title>Session Security for NTLM SSP Based Servers</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="3666" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-25264-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The system must be configured to meet the minimum session security requirement for NTLM SSP based servers.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require NTLMv2 session security'" test_ref="oval:mil.disa.fso.windows:tst:459600"/>
+      <criterion comment="Verifies 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require 128-bit encryption'" test_ref="oval:mil.disa.fso.windows:tst:459601"/>
+    </criteria>
+  </definition>
+</def-group>

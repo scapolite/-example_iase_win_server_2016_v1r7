@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1045" version="2">
+    <metadata>
+      <title>The Telnet Client must not be installed.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73295" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption or may provide unauthorized access to the system.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Check to make sure the Telnet Client server feature is not present." test_ref="oval:mil.disa.stig.windows:tst:104501"/>
+      <criterion comment="Check to make sure the Telnet Client server feature is disabled." test_ref="oval:mil.disa.stig.windows:tst:104502"/>
+    </criteria>
+  </definition>
+  <win:wmi57_test check="none satisfy" comment="Check to make sure the Telnet Client server feature is disabled." id="oval:mil.disa.stig.windows:tst:104502" version="2">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:104501"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:104500"/>
+  </win:wmi57_test>
+  <win:wmi57_state comment="InstallState is '1'" id="oval:mil.disa.stig.windows:ste:104500" version="3">
+    <win:result datatype="record" operation="equals">
+      <field name="installstate">1</field>
+    </win:result>
+  </win:wmi57_state>
+  <win:wmi57_object comment="Telnet Client" id="oval:mil.disa.stig.windows:obj:104501" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT InstallState FROM Win32_OptionalFeature WHERE name='telnetclient'</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_test check="at least one" check_existence="none_exist" comment="Check to make sure the Telnet Client server feature is not present." id="oval:mil.disa.stig.windows:tst:104501" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:104501"/>
+  </win:wmi57_test>
+</def-group>

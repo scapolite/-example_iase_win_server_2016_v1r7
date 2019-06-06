@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1024" version="3">
+    <metadata>
+      <title>NTFS ReFS Filesystems Only</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73247" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Local volumes must use a format that supports NTFS attributes.</description>
+    </metadata>
+    <criteria negate="true" operator="OR">
+      <criterion comment="Verifies local volumes are formatted using NTFS or ReFS" test_ref="oval:mil.disa.stig.windows:tst:102400"/>
+    </criteria>
+  </definition>
+  <win:wmi57_object comment="All 'Local Disk' File systems minus those that only use NTFS or ReFS" id="oval:mil.disa.stig.windows:obj:102400" version="2">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string">SELECT filesystem FROM win32_logicaldisk WHERE drivetype=3 AND filesystem!='NTFS' AND filesystem!='ReFS'</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_test check="at least one" comment="Verifies local volumes are formatted using NTFS or ReFS" id="oval:mil.disa.stig.windows:tst:102400" version="4">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:102400"/>
+  </win:wmi57_test>
+</def-group>

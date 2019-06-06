@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1224" version="1">
+    <metadata>
+      <title>The default permissions of global system objects must be strengthened.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73705" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44597-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The default permissions of global system objects must be increased.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links)' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:122400"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:460200" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SYSTEM\CurrentControlSet\Control\Session Manager</win:key>
+    <win:name datatype="string">ProtectionMode</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Verifies System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links)' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:122400" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:460200"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:122400"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 1" id="oval:mil.disa.stig.windows:ste:122400" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+</def-group>

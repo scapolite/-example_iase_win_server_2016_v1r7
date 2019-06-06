@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1239" version="1">
+    <metadata>
+      <title>WN16-UR-000070</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73743" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44987-6" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Back up files and directories user right must only be assigned to the Administrators group.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Back up files and directories - Administrators" test_ref="oval:mil.disa.stig.windows:tst:123900"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_object comment="Filter for Administrators" id="oval:mil.disa.stig.windows:obj:123900" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:123901</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:123901</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Back up files and directories" id="oval:mil.disa.stig.windows:ste:123900" version="1">
+    <win:sebackupprivilege datatype="boolean" operation="equals">0</win:sebackupprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:123901" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_test check="all" comment="Back up files and directories - Administrators" id="oval:mil.disa.stig.windows:tst:123900" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:123900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:123900"/>
+  </win:accesstoken_test>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:123901" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+</def-group>

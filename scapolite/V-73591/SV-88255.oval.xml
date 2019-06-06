@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:137" version="2">
+    <metadata>
+      <title>PowerShell Script block logging must be enabled.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 10</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>PowerShell Script block logging must be enabled.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Verifies PowerShell Script Block Logging is endabled" test_ref="oval:mil.disa.stig.windows:tst:13700"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="all_exist" comment="Check if PowerShell Script Block Logging is set to enabled in the registry" id="oval:mil.disa.stig.windows:tst:13700" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:13700"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:13700"/>
+  </win:registry_test>
+  <win:registry_state comment="the REG_DWORD value named EnableScriptBlockLogging needs to be set at 1" id="oval:mil.disa.stig.windows:ste:13700" version="2">
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+  <win:registry_object comment="Check the value at HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging" id="oval:mil.disa.stig.windows:obj:13700" version="2">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging</win:key>
+    <win:name datatype="string" operation="pattern match">EnableScriptBlockLogging</win:name>
+  </win:registry_object>
+</def-group>

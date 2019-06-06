@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:obj:420107'
+- 'oval:mil.disa.stig.windows:obj:420104'
+- 'oval:mil.disa.stig.windows:obj:420102'
+- 'oval:mil.disa.stig.windows:obj:420105'
+- 'oval:mil.disa.stig.windows:obj:420109'
+- 'oval:mil.disa.stig.windows:obj:420108'
+- 'oval:mil.disa.stig.windows:obj:420103'
+- 'oval:mil.disa.stig.windows:obj:420100'
+- 'oval:mil.disa.stig.windows:tst:420100'
+- 'oval:mil.disa.stig.windows:obj:420106'
+- 'oval:mil.disa.stig.windows:obj:420101'
+- 'oval:mil.disa.stig.windows:tst:420101'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1103" version="3">
+    <metadata>
+      <title>WN16-PK-000030</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The US DoD CCEB Interoperability Root CA cross-certificates must be installed in the Untrusted Certificate Store on unclassified systems.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Verifies the US DoD CCEB Interoperability Root CA cross-certificates are installed in the Untrusted Certificates Store." definition_ref="oval:mil.disa.stig.windows:def:4201"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420107" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\929BF3196896994C0A201DF4A5B71F603FEFBF2E</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420104" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\DA36FAF56B2F6FBA1604F5BE46D864C9FA013BA3</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420102" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\DA36FAF56B2F6FBA1604F5BE46D864C9FA013BA3</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:4201" version="1">
+    <metadata>
+      <title>DoD CCEB Interoperability Root CA Cross-Certificates</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+        <platform>Microsoft Windows 10</platform>
+      </affected>
+      <description>The US DoD CCEB Interoperability Root CA cross-certificates must be installed in the Untrusted Certificate Store on unclassified systems.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies the DoD Root CA 2 Certificate expiring 3/9/2019 is installed into the Untrusted Certificates Store." test_ref="oval:mil.disa.stig.windows:tst:420100"/>
+      <criterion comment="Verifies the DoD Root CA 3 Certificate expiring 9/27/2019 is installed into the Untrusted Certificates Store." test_ref="oval:mil.disa.stig.windows:tst:420101"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420105" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420106</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420109</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420109" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\929BF3196896994C0A201DF4A5B71F603FEFBF2E</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420108" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Disallowed\Certificates\929BF3196896994C0A201DF4A5B71F603FEFBF2E</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420103" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Disallowed\Certificates\DA36FAF56B2F6FBA1604F5BE46D864C9FA013BA3</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420100" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420101</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420104</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_test check="at least one" check_existence="at_least_one_exists" comment="The DoD Root CA 2 Certificate expiring 3/9/2019 is installed into the Untrusted Certificates Store." id="oval:mil.disa.stig.windows:tst:420100" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:420100"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420106" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420107</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420108</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420101" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420102</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420103</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_test check="at least one" check_existence="at_least_one_exists" comment="The DoD Root CA 3 Certificate expiring 9/27/2019 is installed into the Untrusted Certificates Store." id="oval:mil.disa.stig.windows:tst:420101" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:420105"/>
+  </win:registry_test>
+</def-group>

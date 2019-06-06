@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:tst:468100'
+- 'oval:mil.disa.fso.windows:obj:466400'
+- 'oval:mil.disa.fso.windows:ste:468101'
+- 'oval:mil.disa.fso.windows:tst:468101'
+- 'oval:mil.disa.fso.windows:ste:468100'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1070" version="2">
+    <metadata>
+      <title>Windows Server 2016 must be configured to audit Policy Change - Audit Policy Change successes.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73461" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-45966-9" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The system must be configured to audit Policy Change - Audit Policy Change successes.</description>
+    </metadata>
+    <criteria comment="Audit - Audit Policy Change - Success" operator="OR">
+      <extend_definition comment="Windows2012 audit policy change check." definition_ref="oval:mil.disa.fso.windows:def:4681"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="Audit - Audit Policy Change - Success only" id="oval:mil.disa.fso.windows:tst:468100" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:466400"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:468100"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_object id="oval:mil.disa.fso.windows:obj:466400" version="1"/>
+  <win:auditeventpolicysubcategories_state comment="Audit - Audit Policy Change - Success and Failure" id="oval:mil.disa.fso.windows:ste:468101" version="1">
+    <win:audit_policy_change datatype="string" operation="equals">AUDIT_SUCCESS_FAILURE</win:audit_policy_change>
+  </win:auditeventpolicysubcategories_state>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4681" version="1">
+    <metadata>
+      <title>Audit - Audit Policy Change - Success</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="26546" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>The system must be configured to audit Policy Change - Audit Policy Change successes.</description>
+    </metadata>
+    <criteria comment="Audit - Audit Policy Change - Success" operator="OR">
+      <criterion comment="Audit - Audit Policy Change - Success only" test_ref="oval:mil.disa.fso.windows:tst:468100"/>
+      <criterion comment="Audit - Audit Policy Change - Success and Failure" test_ref="oval:mil.disa.fso.windows:tst:468101"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="Audit - Audit Policy Change - Success and Failure" id="oval:mil.disa.fso.windows:tst:468101" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:466400"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:468101"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_state comment="Audit - Audit Policy Change - Success only" id="oval:mil.disa.fso.windows:ste:468100" version="1">
+    <win:audit_policy_change datatype="string" operation="equals">AUDIT_SUCCESS</win:audit_policy_change>
+  </win:auditeventpolicysubcategories_state>
+</def-group>

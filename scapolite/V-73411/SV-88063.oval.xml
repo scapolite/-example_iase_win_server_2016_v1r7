@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:var:498401'
+- 'oval:mil.disa.fso.windows:ste:498408'
+- 'oval:mil.disa.fso.windows:obj:498401'
+- 'oval:mil.disa.fso.windows:obj:388601'
+- 'oval:mil.disa.fso.windows:tst:498400'
+- 'oval:mil.disa.fso.windows:ste:498402'
+- 'oval:mil.disa.fso.windows:obj:498404'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1054" version="3">
+    <metadata>
+      <title>Event Viewer must be protected from unauthorized modification and deletion. Windows 2016.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="72135" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Protecting audit information also includes identifying and protecting the tools used to view and manipulate log data.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Windows2012 audit authentication policy change check." definition_ref="oval:mil.disa.fso.windows:def:4984"/>
+    </criteria>
+  </definition>
+  <local_variable comment="SystemRoot\System32" datatype="string" id="oval:mil.disa.fso.windows:var:498401" version="1">
+    <concat>
+      <object_component item_field="value" object_ref="oval:mil.disa.fso.windows:obj:388601"/>
+      <literal_component>\System32</literal_component>
+    </concat>
+  </local_variable>
+  <win:fileeffectiverights53_state comment="No Rights except Read and Execute" id="oval:mil.disa.fso.windows:ste:498408" version="1">
+    <win:standard_delete datatype="boolean" entity_check="all" operation="equals">false</win:standard_delete>
+    <win:standard_write_dac datatype="boolean" entity_check="all" operation="equals">false</win:standard_write_dac>
+    <win:standard_write_owner datatype="boolean" entity_check="all" operation="equals">false</win:standard_write_owner>
+    <win:generic_write datatype="boolean" entity_check="all" operation="equals">false</win:generic_write>
+    <win:file_write_data datatype="boolean" entity_check="all" operation="equals">false</win:file_write_data>
+    <win:file_append_data datatype="boolean" entity_check="all" operation="equals">false</win:file_append_data>
+    <win:file_write_ea datatype="boolean" entity_check="all" operation="equals">false</win:file_write_ea>
+    <win:file_delete_child datatype="boolean" entity_check="all" operation="equals">false</win:file_delete_child>
+    <win:file_write_attributes datatype="boolean" entity_check="all" operation="equals">false</win:file_write_attributes>
+  </win:fileeffectiverights53_state>
+  <win:fileeffectiverights53_object comment="Event Viewer Rights" id="oval:mil.disa.fso.windows:obj:498401" version="1">
+    <win:path datatype="string" var_check="at least one" var_ref="oval:mil.disa.fso.windows:var:498401"/>
+    <win:filename datatype="string">Eventvwr.exe</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:registry_object comment="System Root Directory Registry Object" id="oval:mil.disa.fso.windows:obj:388601" version="2">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Microsoft\Windows NT\CurrentVersion</win:key>
+    <win:name datatype="string">SystemRoot</win:name>
+  </win:registry_object>
+  <win:fileeffectiverights53_test check="all" check_existence="any_exist" comment="Eventvwr.exe: Only Read and Execute rights for users other than TrustedInstaller" id="oval:mil.disa.fso.windows:tst:498400" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:498404"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:498408"/>
+  </win:fileeffectiverights53_test>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4984" version="2">
+    <metadata>
+      <title>Event Viewer must be protected from unauthorized modification and deletion</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <description>Verify the permissions on Event Viewer only allow TrustedInstaller permissions to change or modify.</description>
+    </metadata>
+    <criteria>
+      <criterion comment="Eventvwr.exe: Read and Execute rights for Administrators, System, Users, All Application Packages" test_ref="oval:mil.disa.fso.windows:tst:498400"/>
+    </criteria>
+  </definition>
+  <win:fileeffectiverights53_state comment="TrustedInstaller" id="oval:mil.disa.fso.windows:ste:498402" version="1">
+    <win:trustee_sid datatype="string" operation="equals">S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464</win:trustee_sid>
+  </win:fileeffectiverights53_state>
+  <win:fileeffectiverights53_object comment="Eventvwr Rights except for TrustedInstaller" id="oval:mil.disa.fso.windows:obj:498404" version="1">
+    <set>
+      <object_reference>oval:mil.disa.fso.windows:obj:498401</object_reference>
+      <filter>oval:mil.disa.fso.windows:ste:498402</filter>
+    </set>
+  </win:fileeffectiverights53_object>
+</def-group>

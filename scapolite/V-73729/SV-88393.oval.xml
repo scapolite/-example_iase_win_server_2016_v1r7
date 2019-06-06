@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1236" version="1">
+    <metadata>
+      <title>WN16-UR-000010</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73729" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47182-1" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Access Credential Manager as a trusted caller user right must not be assigned to any groups or accounts.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Access Credential Manager as a trusted caller - None" test_ref="oval:mil.disa.stig.windows:tst:123600"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_test check="all" comment="Access Credential Manager as a trusted caller - None" id="oval:mil.disa.stig.windows:tst:123600" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:123600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:123600"/>
+  </win:accesstoken_test>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:123600" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Access Credential Manager as a trusted caller" id="oval:mil.disa.stig.windows:ste:123600" version="1">
+    <win:setrustedcredmanaccessnameright datatype="boolean" operation="equals">0</win:setrustedcredmanaccessnameright>
+  </win:accesstoken_state>
+</def-group>

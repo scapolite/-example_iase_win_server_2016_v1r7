@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1185" version="1">
+    <metadata>
+      <title>Rename Built-in Administrator Account</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The built-in administrator account must be renamed.</description>
+      <reference ref_id="CCE-46321-6" source="http://cce.mitre.org"/>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Accounts: Rename administrator account' is not set to 'Administrator'" test_ref="oval:mil.disa.stig.windows:tst:118500"/>
+      <criterion comment="Verifies 'Accounts: Rename administrator account' is not set to 'localdomain\Administrator'" test_ref="oval:mil.disa.stig.windows:tst:118501"/>
+    </criteria>
+  </definition>
+  <win:sid_sid_object comment="Built-in Administrator SID" id="oval:mil.disa.stig.windows:obj:118500" version="1">
+    <win:trustee_sid operation="pattern match">^S-1-5-[0-9-]+-500$</win:trustee_sid>
+  </win:sid_sid_object>
+  <win:sid_sid_test check="all" check_existence="any_exist" comment="'Accounts: Rename administrator account' is not set to 'Administrator'" id="oval:mil.disa.stig.windows:tst:118500" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:118500"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:118500"/>
+  </win:sid_sid_test>
+  <win:sid_sid_test check="all" check_existence="any_exist" comment="'Accounts: Rename administrator account' is not set to 'localdomain\Administrator'" id="oval:mil.disa.stig.windows:tst:118501" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:118500"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:118501"/>
+  </win:sid_sid_test>
+  <local_variable comment="localdomain\Administrator" datatype="string" id="oval:mil.disa.stig.windows:var:118500" version="1">
+    <concat>
+      <object_component item_field="trustee_domain" object_ref="oval:mil.disa.stig.windows:obj:118500"/>
+      <literal_component>\Administrator</literal_component>
+    </concat>
+  </local_variable>
+  <win:sid_sid_state comment="Not localdomain\Administrator" id="oval:mil.disa.stig.windows:ste:118501" version="1">
+    <win:trustee_name datatype="string" operation="case insensitive not equal" var_ref="oval:mil.disa.stig.windows:var:118500"/>
+  </win:sid_sid_state>
+  <win:sid_sid_state comment="Not Administrator" id="oval:mil.disa.stig.windows:ste:118500" version="1">
+    <win:trustee_name datatype="string" operation="case insensitive not equal">Administrator</win:trustee_name>
+  </win:sid_sid_state>
+</def-group>

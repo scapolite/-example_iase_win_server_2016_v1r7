@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1243" version="1">
+    <metadata>
+      <title>WN16-UR-000110</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73751" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46835-5" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Create permanent shared objects user right must not be assigned to any groups or accounts.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Create permanent shared objects - None" test_ref="oval:mil.disa.stig.windows:tst:124300"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_test check="all" comment="Create permanent shared objects - None" id="oval:mil.disa.stig.windows:tst:124300" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124300"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124300"/>
+  </win:accesstoken_test>
+  <win:accesstoken_state comment="Create permanent shared objects" id="oval:mil.disa.stig.windows:ste:124300" version="1">
+    <win:secreatepermanentprivilege datatype="boolean" operation="equals">0</win:secreatepermanentprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:124300" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+</def-group>

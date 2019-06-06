@@ -1,0 +1,184 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:obj:420018'
+- 'oval:mil.disa.stig.windows:obj:420006'
+- 'oval:mil.disa.stig.windows:obj:420012'
+- 'oval:mil.disa.stig.windows:obj:420004'
+- 'oval:mil.disa.stig.windows:obj:420009'
+- 'oval:mil.disa.stig.windows:obj:420013'
+- 'oval:mil.disa.stig.windows:obj:420000'
+- 'oval:mil.disa.stig.windows:obj:420005'
+- 'oval:mil.disa.stig.windows:tst:420001'
+- 'oval:mil.disa.stig.windows:tst:420000'
+- 'oval:mil.disa.stig.windows:obj:420007'
+- 'oval:mil.disa.stig.windows:obj:420017'
+- 'oval:mil.disa.stig.windows:obj:420010'
+- 'oval:mil.disa.stig.windows:tst:420003'
+- 'oval:mil.disa.stig.windows:obj:420014'
+- 'oval:mil.disa.stig.windows:obj:420011'
+- 'oval:mil.disa.stig.windows:obj:420001'
+- 'oval:mil.disa.stig.windows:obj:420019'
+- 'oval:mil.disa.stig.windows:obj:420008'
+- 'oval:mil.disa.stig.windows:obj:420002'
+- 'oval:mil.disa.stig.windows:obj:420003'
+- 'oval:mil.disa.stig.windows:tst:420002'
+- 'oval:mil.disa.stig.windows:obj:420015'
+- 'oval:mil.disa.stig.windows:obj:420016'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1101" version="2">
+    <metadata>
+      <title>WN16-PK-000010</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The DoD Root CA certificates must be installed in the Trusted Root Store.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Verifies the DoD Root CA certificates are installed in the Trusted Root Store." definition_ref="oval:mil.disa.stig.windows:def:4200"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420018" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Root\Certificates\4ECB5CC3095670454DA1CBD410FC921F46B8564B</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420006" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420007</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420008</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420012" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\B8269F25DBD937ECAFD4C35A9838571723F2D026</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420004" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Root\Certificates\8C941B34EA1EA6ED9AE2BC54CF687252B4C9B561</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420009" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Root\Certificates\D73CA91102A2204A36459ED32213B467D7CE97FB</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420013" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Root\Certificates\B8269F25DBD937ECAFD4C35A9838571723F2D026</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420000" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420001</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420004</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420005" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420006</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420009</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_test check="at least one" check_existence="at_least_one_exists" comment="The DoD Root CA 3 Certificate expiring 12/30/2029 is installed into the Trusted Root Store." id="oval:mil.disa.stig.windows:tst:420001" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:420005"/>
+  </win:registry_test>
+  <win:registry_test check="at least one" check_existence="at_least_one_exists" comment="The DoD Root CA 2 Certificate expiring 12/5/2029 is installed into the Trusted Root Store." id="oval:mil.disa.stig.windows:tst:420000" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:420000"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420007" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\D73CA91102A2204A36459ED32213B467D7CE97FB</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420017" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\4ECB5CC3095670454DA1CBD410FC921F46B8564B</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420010" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420011</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420014</object_reference>
+    </set>
+  </win:registry_object>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:4200" version="1">
+    <metadata>
+      <title>DoD Root CA Certificates</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+        <platform>Microsoft Windows 10</platform>
+      </affected>
+      <description>The DoD Root CA certificates must be installed in the Trusted Root Store.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies the DoD Root CA 2 Certificate expiring 12/5/2029 is installed into the Trusted Root Store." test_ref="oval:mil.disa.stig.windows:tst:420000"/>
+      <criterion comment="Verifies the DoD Root CA 3 Certificate expiring 12/30/2029 is installed into the Trusted Root Store." test_ref="oval:mil.disa.stig.windows:tst:420001"/>
+      <criterion comment="Verifies the DoD Root CA 4 Certificate expiring 7/25/2032 is installed into the Trusted Root Store." test_ref="oval:mil.disa.stig.windows:tst:420002"/>
+      <criterion comment="Verifies the DoD Root CA 5 Certificate expiring 6/14/2041 is installed into the Trusted Root Store." test_ref="oval:mil.disa.stig.windows:tst:420003"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="at least one" check_existence="at_least_one_exists" comment="The DoD Root CA 5 Certificate expiring 6/14/2041 is installed into the Trusted Root Store." id="oval:mil.disa.stig.windows:tst:420003" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:420015"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420014" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Root\Certificates\B8269F25DBD937ECAFD4C35A9838571723F2D026</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420011" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420012</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420013</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420001" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420002</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420003</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420019" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Root\Certificates\4ECB5CC3095670454DA1CBD410FC921F46B8564B</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420008" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Root\Certificates\D73CA91102A2204A36459ED32213B467D7CE97FB</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420002" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\8C941B34EA1EA6ED9AE2BC54CF687252B4C9B561</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420003" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Root\Certificates\8C941B34EA1EA6ED9AE2BC54CF687252B4C9B561</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="at least one" check_existence="at_least_one_exists" comment="The DoD Root CA 4 Certificate expiring 7/25/2032 is installed into the Trusted Root Store." id="oval:mil.disa.stig.windows:tst:420002" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:420010"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420015" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420016</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420019</object_reference>
+    </set>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:420016" version="1">
+    <set>
+      <object_reference>oval:mil.disa.stig.windows:obj:420017</object_reference>
+      <object_reference>oval:mil.disa.stig.windows:obj:420018</object_reference>
+    </set>
+  </win:registry_object>
+</def-group>

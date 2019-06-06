@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:obj:497300'
+- 'oval:mil.disa.fso.windows:ste:497300'
+- 'oval:mil.disa.fso.windows:tst:497300'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1221" version="1">
+    <metadata>
+      <title>Users must be required to enter a password to access private keys stored on the computer.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 2016</platform>
+      </affected>
+      <reference ref_id="73699" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46878-5" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Required to enter a password to access private keys</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Windows2012 Users must be required to enter a password to access private keys stored on the computer check." definition_ref="oval:mil.disa.fso.windows:def:4973"/>
+    </criteria>
+  </definition>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4973" version="1">
+    <metadata>
+      <title>The operating system must shut down by default upon audit failure (unless availability is an overriding concern).</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2003</platform>
+        <platform>Microsoft Windows Vista</platform>
+        <platform>Microsoft Windows 7</platform>
+        <platform>Microsoft Windows 8</platform>
+        <platform>Microsoft Windows 2008</platform>
+        <platform>Microsoft Windows 2008 R2</platform>
+        <platform>Microsoft Windows 2012</platform>
+      </affected>
+      <description>Required to enter a password to access private keys</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="HKEY_LOCAL_MACHINE\System\Policies\Microsoft\Cryptography\ForceKeyProtection exists and equals 2" test_ref="oval:mil.disa.fso.windows:tst:497300"/>
+    </criteria>
+  </definition>
+  <win:registry_object comment="HKEY_LOCAL_MACHINE\System\Policies\Microsoft\Cryptography\ForceKeyProtection" id="oval:mil.disa.fso.windows:obj:497300" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Policies\Microsoft\Cryptography</win:key>
+    <win:name datatype="string">ForceKeyProtection</win:name>
+  </win:registry_object>
+  <win:registry_state comment="Reg_Dword type and value equals 2" id="oval:mil.disa.fso.windows:ste:497300" version="1">
+    <win:type datatype="string" operation="equals">reg_dword</win:type>
+    <win:value datatype="int" operation="equals">2</win:value>
+  </win:registry_state>
+  <win:registry_test check="all" check_existence="all_exist" comment="HKEY_LOCAL_MACHINE\System\Policies\Microsoft\Cryptography\ForceKeyProtection exists and equals 2" id="oval:mil.disa.fso.windows:tst:497300" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:497300"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:497300"/>
+  </win:registry_test>
+</def-group>

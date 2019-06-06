@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1213" version="1">
+    <metadata>
+      <title>PKU2U authentication using online identities must be prevented.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="21953" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46030-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>PKU2U authentication using online identities must be prevented.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Network Security: Allow PKU2U authentication requests to this computer to use online identities' is set to 'Disabled'" test_ref="oval:mil.disa.stig.windows:tst:121300"/>
+    </criteria>
+  </definition>
+  <win:registry_object comment="Check the registry value at HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\LSA\pku2u\AllowOnlineID" id="oval:mil.disa.stig.windows:obj:121300" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SYSTEM\CurrentControlSet\Control\LSA\pku2u</win:key>
+    <win:name datatype="string">AllowOnlineID</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Network Security: Allow PKU2U authentication requests to this computer to use online identities' is set to 'Disabled'" id="oval:mil.disa.stig.windows:tst:121300" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:121300"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:121300"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 0" id="oval:mil.disa.stig.windows:ste:121300" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">0</win:value>
+  </win:registry_state>
+</def-group>

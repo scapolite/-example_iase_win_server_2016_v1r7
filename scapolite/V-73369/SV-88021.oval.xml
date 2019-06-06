@@ -1,0 +1,342 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:tst:101000'
+- 'oval:mil.disa.stig.windows:ste:101000'
+- 'oval:mil.disa.stig.windows:obj:101000'
+- 'oval:mil.disa.stig.windows:def:1010'
+- 'oval:mil.disa.stig.windows:ste:101001'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1135" version="2">
+    <metadata>
+      <title>Active Directory data files must have proper access control permissions.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>Active Directory data files must have proper access control permissions.</description>
+    </metadata>
+    <criteria comment="IF system is a DC, THEN do the permission checks." operator="OR">
+      <extend_definition comment="System is a DC." definition_ref="oval:mil.disa.stig.windows:def:1010" negate="true"/>
+      <criteria operator="AND">
+        <criteria comment="Database log files path permissions OK" operator="OR">
+          <criteria comment="Database log files path permissions OK using SCC" operator="AND">
+            <criterion comment="Database log files: NT Authority\SYSTEM has full control" test_ref="oval:mil.disa.stig.windows:tst:113500"/>
+            <criterion comment="Database log files: BUILTIN\Administrators has full control" test_ref="oval:mil.disa.stig.windows:tst:113501"/>
+            <criterion comment="Database log files: No other permissions" test_ref="oval:mil.disa.stig.windows:tst:113502"/>
+          </criteria>
+          <criteria comment="Database log files path permissions OK using McAfee products" operator="AND">
+            <criterion comment="Database log files: NT Authority\SYSTEM has full control" test_ref="oval:mil.disa.stig.windows:tst:113506"/>
+            <criterion comment="Database log files: BUILTIN\Administrators has full control" test_ref="oval:mil.disa.stig.windows:tst:113507"/>
+            <criterion comment="Database log files: No other permissions" test_ref="oval:mil.disa.stig.windows:tst:113508"/>
+          </criteria>
+        </criteria>
+        <criteria comment="DSA Database file and files in the same folder permissions OK" operator="OR">
+          <criteria comment="DSA Database file and path permissions OK using SCC" operator="AND">
+            <criterion comment="DSA Database file: NT Authority\SYSTEM has full control" test_ref="oval:mil.disa.stig.windows:tst:113503"/>
+            <criterion comment="DSA Database file: BUILTIN\Administrators has full control" test_ref="oval:mil.disa.stig.windows:tst:113504"/>
+            <criterion comment="DSA Database file: No other permissions" test_ref="oval:mil.disa.stig.windows:tst:113505"/>
+          </criteria>
+          <criteria comment="DSA Database file and path permissions OK using McAfee products" operator="AND">
+            <criterion comment="DSA Database file: NT Authority\SYSTEM has full control" test_ref="oval:mil.disa.stig.windows:tst:113509"/>
+            <criterion comment="DSA Database file: BUILTIN\Administrators has full control" test_ref="oval:mil.disa.stig.windows:tst:113510"/>
+            <criterion comment="DSA Database file: No other permissions" test_ref="oval:mil.disa.stig.windows:tst:113511"/>
+          </criteria>
+        </criteria>
+        <criteria comment="DSA Working Directory permissions OK" operator="OR">
+          <criteria comment="DSA Working Directory permissions OK using SCC" operator="AND">
+            <criterion comment="DSA Working Directory: NT Authority\SYSTEM has full control" test_ref="oval:mil.disa.stig.windows:tst:113512"/>
+            <criterion comment="DSA Working Directory: BUILTIN\Administrators has full control" test_ref="oval:mil.disa.stig.windows:tst:113513"/>
+            <criterion comment="DSA Working Directory: No other permissions" test_ref="oval:mil.disa.stig.windows:tst:113514"/>
+          </criteria>
+          <criteria comment="DSA Working Directory permissions OK using McAfee products" operator="AND">
+            <criterion comment="DSA Working Directory: NT Authority\SYSTEM has full control" test_ref="oval:mil.disa.stig.windows:tst:113515"/>
+            <criterion comment="DSA Working Directory: BUILTIN\Administrators has full control" test_ref="oval:mil.disa.stig.windows:tst:113516"/>
+            <criterion comment="DSA Working Directory: No other permissions" test_ref="oval:mil.disa.stig.windows:tst:113517"/>
+          </criteria>
+        </criteria>
+      </criteria>
+    </criteria>
+  </definition>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Working Directory: NT Authority\SYSTEM has full control" id="oval:mil.disa.stig.windows:tst:113515" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113517"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:registry_object comment="DSA Database file" id="oval:mil.disa.stig.windows:obj:113501" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">System\CurrentControlSet\Services\NTDS\Parameters</win:key>
+    <win:name datatype="string" operation="equals">DSA Database file</win:name>
+  </win:registry_object>
+  <win:fileeffectiverights53_object comment="Files in the same directory as the DSA Database - Administrators permissions" id="oval:mil.disa.stig.windows:obj:113506" version="2">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113501"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Database log files - Administrators permissions" id="oval:mil.disa.stig.windows:obj:113509" version="2">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113500"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Database log files - Administrators permissions" id="oval:mil.disa.stig.windows:obj:113503" version="2">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113500"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Files in the DSA Working Directory - Administrators permissions, SCC" id="oval:mil.disa.stig.windows:obj:113515" version="1">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113502"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_test check="all" check_existence="none_exist" comment="Database log files: No other permissions" id="oval:mil.disa.stig.windows:tst:113502" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113504"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="none_exist" comment="DSA Working Directory: No other permissions" id="oval:mil.disa.stig.windows:tst:113517" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113519"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Working Directory: BUILTIN\Administrators has full control" id="oval:mil.disa.stig.windows:tst:113516" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113518"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Working Directory: BUILTIN\Administrators has full control" id="oval:mil.disa.stig.windows:tst:113513" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113515"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_object comment="Database log files - Other permissions" id="oval:mil.disa.stig.windows:obj:113510" version="2">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113500"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+    <filter>oval:mil.disa.stig.windows:ste:113500</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113501</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113503</filter>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Files in the same directory as the DSA Database - Other permissions" id="oval:mil.disa.stig.windows:obj:113513" version="1">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113501"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+    <filter>oval:mil.disa.stig.windows:ste:113500</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113501</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113503</filter>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_test check="all" check_existence="none_exist" comment="DSA Database file: No other permissions" id="oval:mil.disa.stig.windows:tst:113505" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113507"/>
+  </win:fileeffectiverights53_test>
+  <win:wmi57_test check="all" check_existence="at_least_one_exists" comment="System is a DC" id="oval:mil.disa.stig.windows:tst:101000" state_operator="OR" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:101000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:101000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:101001"/>
+  </win:wmi57_test>
+  <local_variable comment="DSA Working Directory" datatype="string" id="oval:mil.disa.stig.windows:var:113502" version="1">
+    <object_component item_field="value" object_ref="oval:mil.disa.stig.windows:obj:113520"/>
+  </local_variable>
+  <win:registry_object comment="Database log files path" id="oval:mil.disa.stig.windows:obj:113500" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">System\CurrentControlSet\Services\NTDS\Parameters</win:key>
+    <win:name datatype="string" operation="equals">Database log files path</win:name>
+  </win:registry_object>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Database file: NT Authority\SYSTEM has full control" id="oval:mil.disa.stig.windows:tst:113503" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113505"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="Database log files: NT Authority\SYSTEM has full control" id="oval:mil.disa.stig.windows:tst:113500" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113502"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:wmi57_state comment="Primary DC is 5" id="oval:mil.disa.stig.windows:ste:101000" version="1">
+    <win:result datatype="record" operation="equals">
+      <field name="domainrole">5</field>
+    </win:result>
+  </win:wmi57_state>
+  <win:fileeffectiverights53_object comment="Database log files - SYSTEM permissions" id="oval:mil.disa.stig.windows:obj:113502" version="2">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113500"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Database log files - Other permissions" id="oval:mil.disa.stig.windows:obj:113504" version="2">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113500"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+    <filter>oval:mil.disa.stig.windows:ste:113500</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113501</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113503</filter>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Files in the DSA Working Directory - Administrators permissions, McAfee tools" id="oval:mil.disa.stig.windows:obj:113518" version="1">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113502"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Files in the same directory as the DSA Database - SYSTEM permissions" id="oval:mil.disa.stig.windows:obj:113505" version="2">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113501"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_state comment="Administrators Rights" id="oval:mil.disa.stig.windows:ste:113500" version="1">
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_state>
+  <win:fileeffectiverights53_object comment="Files in the same directory as the DSA Database - Administrators permissions" id="oval:mil.disa.stig.windows:obj:113512" version="1">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113501"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-32-544</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Files in the DSA Working Directory - Other permissions, McAfee tools" id="oval:mil.disa.stig.windows:obj:113519" version="1">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113502"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+    <filter>oval:mil.disa.stig.windows:ste:113500</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113501</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113503</filter>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Database file and all other files in the same directory: NT Authority\SYSTEM has full control" id="oval:mil.disa.stig.windows:tst:113509" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113511"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="Database log files: BUILTIN\Administrators has full control" id="oval:mil.disa.stig.windows:tst:113507" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113509"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Working Directory: NT Authority\SYSTEM has full control" id="oval:mil.disa.stig.windows:tst:113512" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113514"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:wmi57_object comment="DomainRole property" id="oval:mil.disa.stig.windows:obj:101000" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT DomainRole FROM win32_computersystem</win:wql>
+  </win:wmi57_object>
+  <win:fileeffectiverights53_object comment="Files in the DSA Working Directory - SYSTEM permissions, McAfee tools" id="oval:mil.disa.stig.windows:obj:113517" version="1">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113502"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_test check="all" check_existence="none_exist" comment="DSA Working Directory: No other permissions" id="oval:mil.disa.stig.windows:tst:113514" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113516"/>
+  </win:fileeffectiverights53_test>
+  <definition class="inventory" id="oval:mil.disa.stig.windows:def:1010" version="1">
+    <metadata>
+      <title>The system is a DC.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="cpe:/o:microsoft:windows_server_2016:-" source="CPE"/>
+      <description>The Windows Server 2016 system is a domain controller.</description>
+    </metadata>
+    <criteria>
+      <criterion comment="System is a DC" test_ref="oval:mil.disa.stig.windows:tst:101000"/>
+    </criteria>
+  </definition>
+  <win:fileeffectiverights53_test check="all" check_existence="none_exist" comment="DSA Database file and all other files in the same directory: No other permissions" id="oval:mil.disa.stig.windows:tst:113511" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113513"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_state comment="No Rights" id="oval:mil.disa.stig.windows:ste:113503" version="1">
+    <win:standard_delete datatype="boolean">false</win:standard_delete>
+    <win:standard_read_control datatype="boolean">false</win:standard_read_control>
+    <win:standard_write_dac datatype="boolean">false</win:standard_write_dac>
+    <win:standard_write_owner datatype="boolean">false</win:standard_write_owner>
+    <win:standard_synchronize datatype="boolean">false</win:standard_synchronize>
+    <win:generic_read datatype="boolean">false</win:generic_read>
+    <win:generic_write datatype="boolean">false</win:generic_write>
+    <win:generic_execute datatype="boolean">false</win:generic_execute>
+    <win:file_read_data datatype="boolean">false</win:file_read_data>
+    <win:file_write_data datatype="boolean">false</win:file_write_data>
+    <win:file_append_data datatype="boolean">false</win:file_append_data>
+    <win:file_read_ea datatype="boolean">false</win:file_read_ea>
+    <win:file_write_ea datatype="boolean">false</win:file_write_ea>
+    <win:file_execute datatype="boolean">false</win:file_execute>
+    <win:file_delete_child datatype="boolean">false</win:file_delete_child>
+    <win:file_read_attributes datatype="boolean">false</win:file_read_attributes>
+    <win:file_write_attributes datatype="boolean">false</win:file_write_attributes>
+  </win:fileeffectiverights53_state>
+  <win:fileeffectiverights53_test check="all" check_existence="none_exist" comment="Database log files: No other permissions" id="oval:mil.disa.stig.windows:tst:113508" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113510"/>
+  </win:fileeffectiverights53_test>
+  <win:registry_object comment="DSA Working Directory" id="oval:mil.disa.stig.windows:obj:113520" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">System\CurrentControlSet\Services\NTDS\Parameters</win:key>
+    <win:name datatype="string" operation="equals">DSA Working Directory</win:name>
+  </win:registry_object>
+  <win:fileeffectiverights53_object comment="Files in the same directory as the DSA Database - Other permissions" id="oval:mil.disa.stig.windows:obj:113507" version="2">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113501"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+    <filter>oval:mil.disa.stig.windows:ste:113500</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113501</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113503</filter>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_state comment="Local System Rights" id="oval:mil.disa.stig.windows:ste:113501" version="1">
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_state>
+  <local_variable comment="Database log files path" datatype="string" id="oval:mil.disa.stig.windows:var:113500" version="1">
+    <object_component item_field="value" object_ref="oval:mil.disa.stig.windows:obj:113500"/>
+  </local_variable>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="Database log files: BUILTIN\Administrators has full control" id="oval:mil.disa.stig.windows:tst:113501" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113503"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Database file and all other files in the same directory: BUILTIN\Administrators has full control" id="oval:mil.disa.stig.windows:tst:113510" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113512"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_object comment="Database log files - SYSTEM permissions" id="oval:mil.disa.stig.windows:obj:113508" version="2">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113500"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="DSA Database file: BUILTIN\Administrators has full control" id="oval:mil.disa.stig.windows:tst:113504" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113506"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:fileeffectiverights53_object comment="Files in the same directory as the DSA Database - SYSTEM permissions" id="oval:mil.disa.stig.windows:obj:113511" version="1">
+    <win:path datatype="string" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113501"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_state comment="Full Rights" id="oval:mil.disa.stig.windows:ste:113502" version="1">
+    <win:standard_delete datatype="boolean">true</win:standard_delete>
+    <win:standard_read_control datatype="boolean">true</win:standard_read_control>
+    <win:standard_write_dac datatype="boolean">true</win:standard_write_dac>
+    <win:standard_write_owner datatype="boolean">true</win:standard_write_owner>
+    <win:standard_synchronize datatype="boolean">true</win:standard_synchronize>
+    <win:generic_read datatype="boolean">true</win:generic_read>
+    <win:generic_write datatype="boolean">true</win:generic_write>
+    <win:generic_execute datatype="boolean">true</win:generic_execute>
+    <win:file_read_data datatype="boolean">true</win:file_read_data>
+    <win:file_write_data datatype="boolean">true</win:file_write_data>
+    <win:file_append_data datatype="boolean">true</win:file_append_data>
+    <win:file_read_ea datatype="boolean">true</win:file_read_ea>
+    <win:file_write_ea datatype="boolean">true</win:file_write_ea>
+    <win:file_execute datatype="boolean">true</win:file_execute>
+    <win:file_delete_child datatype="boolean">true</win:file_delete_child>
+    <win:file_read_attributes datatype="boolean">true</win:file_read_attributes>
+    <win:file_write_attributes datatype="boolean">true</win:file_write_attributes>
+  </win:fileeffectiverights53_state>
+  <local_variable comment="DSA Database working path" datatype="string" id="oval:mil.disa.stig.windows:var:113501" version="2">
+    <regex_capture pattern="^(.+)\\">
+      <object_component item_field="value" object_ref="oval:mil.disa.stig.windows:obj:113501"/>
+    </regex_capture>
+  </local_variable>
+  <win:fileeffectiverights53_object comment="Files in the DSA Working Directory - SYSTEM permissions, SCC" id="oval:mil.disa.stig.windows:obj:113514" version="1">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113502"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid>S-1-5-18</win:trustee_sid>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_object comment="Files in the DSA Working Directory - Other permissions, SCC" id="oval:mil.disa.stig.windows:obj:113516" version="1">
+    <win:path datatype="string" operation="case insensitive equals" var_check="all" var_ref="oval:mil.disa.stig.windows:var:113502"/>
+    <win:filename datatype="string" operation="pattern match">^(.*)$</win:filename>
+    <win:trustee_sid datatype="string" operation="pattern match">.*</win:trustee_sid>
+    <filter>oval:mil.disa.stig.windows:ste:113500</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113501</filter>
+    <filter>oval:mil.disa.stig.windows:ste:113503</filter>
+  </win:fileeffectiverights53_object>
+  <win:fileeffectiverights53_test check="all" check_existence="at_least_one_exists" comment="Database log files: NT Authority\SYSTEM has full control" id="oval:mil.disa.stig.windows:tst:113506" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113508"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113502"/>
+  </win:fileeffectiverights53_test>
+  <win:wmi57_state comment="Backup DC is 4" id="oval:mil.disa.stig.windows:ste:101001" version="1">
+    <win:result datatype="record" operation="equals">
+      <field name="domainrole">4</field>
+    </win:result>
+  </win:wmi57_state>
+</def-group>

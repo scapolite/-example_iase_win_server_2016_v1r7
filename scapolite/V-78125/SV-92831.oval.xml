@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:ste:17000'
+- 'oval:mil.disa.stig.windows:obj:16800'
+- 'oval:mil.disa.stig.windows:tst:16800'
+- 'oval:mil.disa.stig.windows:def:170'
+- 'oval:mil.disa.stig.windows:def:168'
+- 'oval:mil.disa.stig.windows:ste:16800'
+- 'oval:mil.disa.stig.windows:obj:17000'
+- 'oval:mil.disa.stig.windows:tst:17000'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1261" version="1">
+    <metadata>
+      <title>WN16-00-000412</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="78125" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>The Server Message Block (SMB) v1 protocol must be disabled on the SMB client.</description>
+    </metadata>
+    <criteria operator="OR">
+      <extend_definition comment="Verifies 'Configure SMBv1 client driver' is set to 'Enabled' with 'Disable driver (recommended)' selected for 'Configure MrxSmb10 driver'" definition_ref="oval:mil.disa.stig.windows:def:170"/>
+      <extend_definition comment="Verifies 'SMB 1.0/CIFS File Sharing Support' feature is not installed" definition_ref="oval:mil.disa.stig.windows:def:168"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="Reg_Dword type and value equals 4" id="oval:mil.disa.stig.windows:ste:17000" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">4</win:value>
+  </win:registry_state>
+  <win:wmi57_object id="oval:mil.disa.stig.windows:obj:16800" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT installstate FROM win32_optionalfeature WHERE name = 'SMB1Protocol'</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_test check="all" check_existence="all_exist" comment="'SMB 1.0/CIFS File Sharing Support' feature is not installed" id="oval:mil.disa.stig.windows:tst:16800" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:16800"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:16800"/>
+  </win:wmi57_test>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:170" version="1">
+    <metadata>
+      <title>The Server Message Block (SMB) v1 protocol must be disabled on the SMB client</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 10</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The Server Message Block (SMB) v1 protocol must be disabled on the SMB client.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Configure SMBv1 client driver' is set to 'Enabled' with 'Disable driver (recommended)' selected for 'Configure MrxSmb10 driver'" test_ref="oval:mil.disa.stig.windows:tst:17000"/>
+    </criteria>
+  </definition>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:168" version="1">
+    <metadata>
+      <title>The 'SMB 1.0/CIFS File Sharing Support' feature must not be installed</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 10</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The Server Message Block (SMB) v1 protocol must be uninstalled.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'SMB 1.0/CIFS File Sharing Support' feature is not installed" test_ref="oval:mil.disa.stig.windows:tst:16800"/>
+    </criteria>
+  </definition>
+  <win:wmi57_state comment="Check SMB v1 Protocol Win32_OptionalFeature object InstallState is equal to 2" id="oval:mil.disa.stig.windows:ste:16800" version="1">
+    <win:result datatype="record" operation="equals">
+      <field datatype="string" entity_check="at least one" name="installstate">2</field>
+    </win:result>
+  </win:wmi57_state>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:17000" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SYSTEM\CurrentControlSet\Services\mrxsmb10</win:key>
+    <win:name datatype="string">Start</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Configure SMBv1 client driver' is set to 'Enabled' with 'Disable driver (recommended)' selected for 'Configure MrxSmb10 driver'" id="oval:mil.disa.stig.windows:tst:17000" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:17000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:17000"/>
+  </win:registry_test>
+</def-group>

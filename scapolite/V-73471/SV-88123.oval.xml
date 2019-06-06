@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:ste:468500'
+- 'oval:mil.disa.fso.windows:tst:468401'
+- 'oval:mil.disa.fso.windows:obj:466400'
+- 'oval:mil.disa.fso.windows:tst:468500'
+- 'oval:mil.disa.fso.windows:ste:468401'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1075" version="2">
+    <metadata>
+      <title>Windows Server 2016 must be configured to audit Privilege Use - Sensitive Privilege Use failures.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73471" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-45981-8" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The system must be configured to audit Privilege Use - Sensitive Privilege Use failures.</description>
+    </metadata>
+    <criteria comment="Audit - Sensitive Privilege Use - Failure" operator="AND">
+      <extend_definition comment="Windows2012 audit sensitive privilege use check." definition_ref="oval:mil.disa.fso.windows:def:4685"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_state comment="Audit - Sensitive Privilege Use - Failure only" id="oval:mil.disa.fso.windows:ste:468500" version="1">
+    <win:sensitive_privilege_use datatype="string" operation="equals">AUDIT_FAILURE</win:sensitive_privilege_use>
+  </win:auditeventpolicysubcategories_state>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="Audit - Sensitive Privilege Use - Success and Failure" id="oval:mil.disa.fso.windows:tst:468401" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:466400"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:468401"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_object id="oval:mil.disa.fso.windows:obj:466400" version="1"/>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="Audit - Sensitive Privilege Use - Failure only" id="oval:mil.disa.fso.windows:tst:468500" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:466400"/>
+    <win:state state_ref="oval:mil.disa.fso.windows:ste:468500"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_state comment="Audit - Sensitive Privilege Use - Success and Failure" id="oval:mil.disa.fso.windows:ste:468401" version="1">
+    <win:sensitive_privilege_use datatype="string" operation="equals">AUDIT_SUCCESS_FAILURE</win:sensitive_privilege_use>
+  </win:auditeventpolicysubcategories_state>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4685" version="1">
+    <metadata>
+      <title>Audit - Sensitive Privilege Use - Failure</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="26550" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>The system must be configured to audit Privilege Use - Sensitive Privilege Use failures.</description>
+    </metadata>
+    <criteria comment="Audit - Sensitive Privilege Use - Failure" operator="OR">
+      <criterion comment="Audit - Sensitive Privilege Use - Failure only" test_ref="oval:mil.disa.fso.windows:tst:468500"/>
+      <criterion comment="Audit - Sensitive Privilege Use - Success and Failure" test_ref="oval:mil.disa.fso.windows:tst:468401"/>
+    </criteria>
+  </definition>
+</def-group>

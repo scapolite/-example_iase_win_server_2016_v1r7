@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1186" version="2">
+    <metadata>
+      <title>Rename Built-in Guest Account</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="1114" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46218-4" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The built-in guest account must be renamed.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Accounts: Rename Guest account' is not set to 'Guest'" test_ref="oval:mil.disa.stig.windows:tst:118600"/>
+      <criterion comment="Verifies 'Accounts: Rename Guest account' is not set to 'localdomain\Guest'" test_ref="oval:mil.disa.stig.windows:tst:118601"/>
+    </criteria>
+  </definition>
+  <win:sid_sid_object comment="Built-in Guest SID" id="oval:mil.disa.stig.windows:obj:118600" version="2">
+    <win:trustee_sid operation="pattern match">^S-1-5-[0-9-]+-501$</win:trustee_sid>
+  </win:sid_sid_object>
+  <local_variable comment="localdomain\Guest" datatype="string" id="oval:mil.disa.stig.windows:var:118600" version="2">
+    <concat>
+      <object_component item_field="trustee_domain" object_ref="oval:mil.disa.stig.windows:obj:118600"/>
+      <literal_component>\Guest</literal_component>
+    </concat>
+  </local_variable>
+  <win:sid_sid_test check="all" check_existence="any_exist" comment="'Accounts: Rename Guest account' is not set to 'localdomain\Guest'" id="oval:mil.disa.stig.windows:tst:118601" version="2">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:118600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:118601"/>
+  </win:sid_sid_test>
+  <win:sid_sid_state comment="Not localdomain\Guest" id="oval:mil.disa.stig.windows:ste:118601" version="2">
+    <win:trustee_name datatype="string" operation="case insensitive not equal" var_ref="oval:mil.disa.stig.windows:var:118600"/>
+  </win:sid_sid_state>
+  <win:sid_sid_test check="all" check_existence="any_exist" comment="'Accounts: Rename Guest account' is not set to 'Guest'" id="oval:mil.disa.stig.windows:tst:118600" version="2">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:118600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:118600"/>
+  </win:sid_sid_test>
+  <win:sid_sid_state comment="Not Guest" id="oval:mil.disa.stig.windows:ste:118600" version="2">
+    <win:trustee_name datatype="string" operation="case insensitive not equal">Guest</win:trustee_name>
+  </win:sid_sid_state>
+</def-group>

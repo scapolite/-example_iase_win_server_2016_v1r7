@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1230" version="1">
+    <metadata>
+      <title>User Account Control must only elevate UIAccess applications that are installed in secure locations.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73717" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46913-0" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>User Account Control must only elevate UIAccess applications that are installed in secure locations.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'User Account Control: Only elevate UIAccess applications that are installed in secure locations' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:123000"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="Reg_Dword type and value equals variable" id="oval:mil.disa.stig.windows:ste:123000" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="Verifies 'User Account Control: Only elevate UIAccess applications that are installed in secure locations' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:123000" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:460800"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:123000"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:460800" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Microsoft\Windows\CurrentVersion\Policies\System</win:key>
+    <win:name datatype="string">EnableSecureUIAPaths</win:name>
+  </win:registry_object>
+</def-group>

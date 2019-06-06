@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:66" version="2">
+    <metadata>
+      <title>The network selection user interface (UI) must not be displayed on the logon screen.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 8</platform>
+        <platform>Microsoft Windows 10</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The network selection user interface (UI) must not be displayed on the logon screen.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Do not display network selection UI' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:6600"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="Verifies 'Do not display network selection UI' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:6600" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:6600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:6600"/>
+  </win:registry_test>
+  <win:registry_state comment="DontDisplayNetworkSelectionUI = 1 (reg_dword)" id="oval:mil.disa.stig.windows:ste:6600" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int">1</win:value>
+  </win:registry_state>
+  <win:registry_object comment="HKLM\SOFTWARE\Policies\Microsoft\Windows\System\DontDisplayNetworkSelectionUI" id="oval:mil.disa.stig.windows:obj:6600" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Policies\Microsoft\Windows\System</win:key>
+    <win:name datatype="string">DontDisplayNetworkSelectionUI</win:name>
+  </win:registry_object>
+</def-group>

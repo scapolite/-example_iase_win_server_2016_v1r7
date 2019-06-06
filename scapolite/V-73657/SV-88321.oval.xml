@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1200" version="1">
+    <metadata>
+      <title>Unencrypted passwords must not be sent to a third-party Server Message Block (SMB) Server</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="1141" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46136-8" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Unencrypted passwords must not be sent to a third-party Server Message Block (SMB) Server.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Microsoft Network Client: Send unencrypted password to connect to third-party SMB servers' is set to 'Disabled'" test_ref="oval:mil.disa.stig.windows:tst:120000"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Microsoft Network Client: Send unencrypted password to connect to third-party SMB servers' is set to 'Disabled'" id="oval:mil.disa.stig.windows:tst:120000" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:120000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:120000"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 0" id="oval:mil.disa.stig.windows:ste:120000" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">0</win:value>
+  </win:registry_state>
+  <win:registry_object comment="Check the registry value stored at HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanWorkstation\Parameters\EnablePlainTextPassword" id="oval:mil.disa.stig.windows:obj:120000" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">System\CurrentControlSet\Services\LanmanWorkstation\Parameters</win:key>
+    <win:name datatype="string">EnablePlainTextPassword</win:name>
+  </win:registry_object>
+</def-group>

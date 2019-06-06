@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1090" version="3">
+    <metadata>
+      <title>WN16-CC-000150</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73525" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46343-0" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Group Policy objects must be reprocessed even if they have not changed.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="'Configure registry policy processing' is set to 'Enabled' with the option 'Process even if the Group Policy objects have not changed' selected'" test_ref="oval:mil.disa.stig.windows:tst:109000"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="Reg_Dword type and value equals 0" id="oval:mil.disa.stig.windows:ste:109000" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">0</win:value>
+  </win:registry_state>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:109000" version="2">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}</win:key>
+    <win:name datatype="string">NoGPOListChanges</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Configure registry policy processing' is set to 'Enabled' with the option 'Process even if the Group Policy objects have not changed' selected" id="oval:mil.disa.stig.windows:tst:109000" version="2">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:109000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:109000"/>
+  </win:registry_test>
+</def-group>

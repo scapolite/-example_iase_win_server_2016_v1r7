@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1113" version="1">
+    <metadata>
+      <title>WN16-CC-000380</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73569" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46771-2" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Local drives must be prevented from sharing with Remote Desktop Session Hosts.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Do not allow drive redirection' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:111300"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Do not allow drive redirection' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:111300" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:111300"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:111300"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:111300" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Policies\Microsoft\Windows NT\Terminal Services</win:key>
+    <win:name datatype="string">fDisableCdm</win:name>
+  </win:registry_object>
+  <external_variable comment="Do not allow drive redirection" datatype="int" id="oval:mil.disa.stig.windows:var:111300" version="1">
+    <possible_value hint="disabled">0</possible_value>
+    <possible_value hint="enabled">1</possible_value>
+  </external_variable>
+  <win:registry_state comment="Reg_Dword type and value equals variable" id="oval:mil.disa.stig.windows:ste:111300" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals" var_ref="oval:mil.disa.stig.windows:var:111300"/>
+  </win:registry_state>
+</def-group>

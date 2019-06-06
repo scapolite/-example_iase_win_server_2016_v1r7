@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:obj:101500'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1016" version="1">
+    <metadata>
+      <title>Minimum Password Age</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73319" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-45608-7" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The minimum password age must meet requirements.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Minimum Password Age' is set to at least '1' day" test_ref="oval:mil.disa.stig.windows:tst:101600"/>
+    </criteria>
+  </definition>
+  <win:passwordpolicy_object comment="Password policy" id="oval:mil.disa.stig.windows:obj:101500" version="1"/>
+  <external_variable comment="Minimum Password Age" datatype="int" id="oval:mil.disa.stig.windows:var:101600" version="1">
+    <possible_value hint="86400_seconds">86400</possible_value>
+    <possible_value hint="172800_seconds">172800</possible_value>
+    <possible_value hint="432000_seconds">432000</possible_value>
+  </external_variable>
+  <win:passwordpolicy_test check="all" check_existence="at_least_one_exists" comment="'Minimum Password Age' is set to at least '1' day" id="oval:mil.disa.stig.windows:tst:101600" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:101500"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:101600"/>
+  </win:passwordpolicy_test>
+  <win:passwordpolicy_state comment="Minimum Password Age is greater than or equal to variable" id="oval:mil.disa.stig.windows:ste:101600" version="1">
+    <win:min_passwd_age datatype="int" operation="greater than or equal" var_ref="oval:mil.disa.stig.windows:var:101600"/>
+  </win:passwordpolicy_state>
+</def-group>

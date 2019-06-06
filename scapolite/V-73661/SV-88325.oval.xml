@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1202" version="1">
+    <metadata>
+      <title>The setting Microsoft network server: Digitally sign communications (always) must be configured to Enabled.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="6833" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47038-5" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The setting Microsoft network server: Digitally sign communications (always) must be configured to Enabled.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:120200"/>
+    </criteria>
+  </definition>
+  <win:registry_object comment="Check the registry value at HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters\RequireSecuritySignature" id="oval:mil.disa.stig.windows:obj:120200" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SYSTEM\CurrentControlSet\Services\LanManServer\Parameters</win:key>
+    <win:name datatype="string">RequireSecuritySignature</win:name>
+  </win:registry_object>
+  <win:registry_state comment="Reg_Dword type and value equals 1" id="oval:mil.disa.stig.windows:ste:120200" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:120200" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:120200"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:120200"/>
+  </win:registry_test>
+</def-group>

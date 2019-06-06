@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:obj:17100'
+- 'oval:mil.disa.stig.windows:tst:17100'
+- 'oval:mil.disa.stig.windows:ste:17100'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1258" version="1">
+    <metadata>
+      <title>WN16-CC-000100</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73511" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-45411-6" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Command line data must be included in process creation events.</description>
+    </metadata>
+    <criteria>
+      <extend_definition comment="Verifies 'Include command line in process creation events' is set to 'Enabled'" definition_ref="oval:mil.disa.stig.windows:def:171"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:17100" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit</win:key>
+    <win:name datatype="string" operation="pattern match">ProcessCreationIncludeCmdLine_Enabled</win:name>
+  </win:registry_object>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:171" version="1">
+    <metadata>
+      <title>Command line data must be included in process creation events</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 10</platform>
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>Command line data must be included in process creation events.</description>
+    </metadata>
+    <criteria>
+      <criterion comment="Verifies 'Include command line in process creation events' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:17100"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="all_exist" comment="'Include command line in process creation events' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:17100" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:17100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:17100"/>
+  </win:registry_test>
+  <win:registry_state comment="REG_DWORD type and value equals 1" id="oval:mil.disa.stig.windows:ste:17100" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+</def-group>

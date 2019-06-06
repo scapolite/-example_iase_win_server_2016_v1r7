@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1241" version="1">
+    <metadata>
+      <title>WN16-UR-000090</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73747" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47295-1" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Create a token object user right must not be assigned to any groups or accounts.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Create a token object - None" test_ref="oval:mil.disa.stig.windows:tst:124100"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_test check="all" comment="Create a token object - None" id="oval:mil.disa.stig.windows:tst:124100" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124100"/>
+  </win:accesstoken_test>
+  <win:accesstoken_state comment="Create a token object" id="oval:mil.disa.stig.windows:ste:124100" version="1">
+    <win:secreatetokenprivilege datatype="boolean" operation="equals">0</win:secreatetokenprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:124100" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+</def-group>

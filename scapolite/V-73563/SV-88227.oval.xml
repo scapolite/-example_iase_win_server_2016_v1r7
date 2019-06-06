@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1110" version="1">
+    <metadata>
+      <title>WN16-CC-000350</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73563" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47028-6" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Turning off File Explorer heap termination on corruption must be disabled.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Turn off heap termination on corruption' is set to 'Disabled'" test_ref="oval:mil.disa.stig.windows:tst:111000"/>
+    </criteria>
+  </definition>
+  <win:registry_test check="all" check_existence="any_exist" comment="'Turn off heap termination on corruption' is set to 'Disabled'" id="oval:mil.disa.stig.windows:tst:111000" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:111000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:111000"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals variable" id="oval:mil.disa.stig.windows:ste:111000" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" var_ref="oval:mil.disa.stig.windows:var:111000"/>
+  </win:registry_state>
+  <external_variable comment="Turn off Heap termination on corruption" datatype="int" id="oval:mil.disa.stig.windows:var:111000" version="1">
+    <possible_value hint="disabled">0</possible_value>
+    <possible_value hint="enabled">1</possible_value>
+  </external_variable>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:111000" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Policies\Microsoft\Windows\Explorer</win:key>
+    <win:name datatype="string">NoHeapTerminationOnCorruption</win:name>
+  </win:registry_object>
+</def-group>

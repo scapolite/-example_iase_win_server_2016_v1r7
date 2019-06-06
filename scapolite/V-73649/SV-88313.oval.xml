@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1196" version="1">
+    <metadata>
+      <title>Legal Banner Dialog Box Title</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="26359" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47009-6" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Windows dialog box title for the legal banner must be configured with the appropriate text.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Legal Notice Caption - DoD Notice and Consent Banner" test_ref="oval:mil.disa.stig.windows:tst:119600"/>
+      <criterion comment="Legal Notice Caption - US Department of Defense Warning Statement" test_ref="oval:mil.disa.stig.windows:tst:119601"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:119600" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System</win:key>
+    <win:name datatype="string">LegalNoticeCaption</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="Legal Notice Caption - US Department of Defense Warning Statement" id="oval:mil.disa.stig.windows:tst:119601" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:119600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:119601"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="all_exist" comment="Legal Notice Caption - DoD Notice and Consent Banner" id="oval:mil.disa.stig.windows:tst:119600" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:119600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:119600"/>
+  </win:registry_test>
+  <win:registry_state id="oval:mil.disa.stig.windows:ste:119600" version="1">
+    <win:type>reg_sz</win:type>
+    <win:value datatype="string" operation="pattern match">^D(oD|OD) N(otice|OTICE) (and|AND) C(onsent|ONSENT) B(anner|ANNER)$</win:value>
+  </win:registry_state>
+  <win:registry_state id="oval:mil.disa.stig.windows:ste:119601" version="1">
+    <win:type>reg_sz</win:type>
+    <win:value datatype="string" operation="pattern match">^U\.?S\.? D(EPARTMENT|epartment) (OF|Of|of) D(EFENSE|efense) W(ARNING|arning) S(TATEMENT|tatement)$</win:value>
+  </win:registry_state>
+</def-group>

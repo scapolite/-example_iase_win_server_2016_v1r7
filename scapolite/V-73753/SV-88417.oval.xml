@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1244" version="1">
+    <metadata>
+      <title>WN16-UR-000120</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73753" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44828-2" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Create symbolic links user right must only be assigned to the Administrators group.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Create symbolic links - Administrators" test_ref="oval:mil.disa.stig.windows:tst:124400"/>
+      <criteria operator="AND">
+        <criterion comment="Create symbolic links - Administrators, Virtual Machines" test_ref="oval:mil.disa.stig.windows:tst:124401"/>
+        <criterion comment="Verifies Hyper-V Role is installed" test_ref="oval:mil.disa.stig.windows:tst:124402"/>
+      </criteria>
+    </criteria>
+  </definition>
+  <win:accesstoken_state comment="Virtual Machines" id="oval:mil.disa.stig.windows:ste:124402" version="1">
+    <win:security_principle datatype="string" operation="equals">NT VIRTUAL MACHINE\Virtual Machines</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="Filter for Administrators" id="oval:mil.disa.stig.windows:obj:124400" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:124402</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:124401</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_object comment="Filter for Administrators, Virtual Machines" id="oval:mil.disa.stig.windows:obj:124401" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:124402</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:124401</filter>
+      <filter>oval:mil.disa.stig.windows:ste:124402</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Create symbolic links" id="oval:mil.disa.stig.windows:ste:124400" version="1">
+    <win:secreatesymboliclinkprivilege datatype="boolean" operation="equals">0</win:secreatesymboliclinkprivilege>
+  </win:accesstoken_state>
+  <win:wmi_object comment="verify hyper-v role installed" id="oval:mil.disa.stig.windows:obj:124403" version="1">
+    <win:namespace datatype="string" operation="equals">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT name FROM Win32_ServerFeature WHERE ID = 20</win:wql>
+  </win:wmi_object>
+  <win:accesstoken_test check="all" comment="Create symbolic links - Administrators, Virtual Machines" id="oval:mil.disa.stig.windows:tst:124401" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124401"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124400"/>
+  </win:accesstoken_test>
+  <win:wmi_state comment="Hyper-V Role is installed" id="oval:mil.disa.stig.windows:ste:124403" version="1">
+    <win:result datatype="string" entity_check="all" operation="equals">Hyper-V</win:result>
+  </win:wmi_state>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:124402" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:124401" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_test check="all" comment="Create symbolic links - Administrators" id="oval:mil.disa.stig.windows:tst:124400" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124400"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124400"/>
+  </win:accesstoken_test>
+  <win:wmi_test check="all" check_existence="at_least_one_exists" comment="Hyper-V Role is installed" id="oval:mil.disa.stig.windows:tst:124402" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:124403"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:124403"/>
+  </win:wmi_test>
+</def-group>

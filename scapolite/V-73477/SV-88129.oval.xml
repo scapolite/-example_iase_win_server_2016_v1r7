@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:tst:11800'
+- 'oval:mil.disa.fso.windows:obj:394100'
+- 'oval:mil.disa.stig.windows:tst:11801'
+- 'oval:mil.disa.stig.windows:ste:11800'
+- 'oval:mil.disa.stig.windows:ste:11801'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1263" version="1">
+    <metadata>
+      <title>WN16-AU-000390</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>Windows Server 2016 must be configured to audit System - Other System Events successes.</description>
+    </metadata>
+    <criteria comment="Audit - Other System Events - Success" operator="OR">
+      <extend_definition comment="Audit - Other System Events - Success" definition_ref="oval:mil.disa.stig.windows:def:118"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="'Audit Other System Events' is set to 'Success'" id="oval:mil.disa.stig.windows:tst:11800" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:394100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:11800"/>
+  </win:auditeventpolicysubcategories_test>
+  <win:auditeventpolicysubcategories_object comment="Audit event subcategories policy" id="oval:mil.disa.fso.windows:obj:394100" version="1"/>
+  <win:auditeventpolicysubcategories_test check="all" check_existence="at_least_one_exists" comment="'Audit Other System Events' is set to 'Success' and 'Failure'" id="oval:mil.disa.stig.windows:tst:11801" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:394100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:11801"/>
+  </win:auditeventpolicysubcategories_test>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:118" version="2">
+    <metadata>
+      <title>WN10-AU-000130</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 8</platform>
+        <platform>Microsoft Windows 10</platform>
+      </affected>
+      <description>The system must be configured to audit System - Other System Events successes.</description>
+    </metadata>
+    <criteria comment="Audit - Other System Events - Success" operator="OR">
+      <criterion comment="Audit - Other System Events - Success only" test_ref="oval:mil.disa.stig.windows:tst:11800"/>
+      <criterion comment="Audit - Other System Events - Success and Failure" test_ref="oval:mil.disa.stig.windows:tst:11801"/>
+    </criteria>
+  </definition>
+  <win:auditeventpolicysubcategories_state comment="'Other System Events' is set to 'Success'" id="oval:mil.disa.stig.windows:ste:11800" version="1">
+    <win:other_system_events datatype="string">AUDIT_SUCCESS</win:other_system_events>
+  </win:auditeventpolicysubcategories_state>
+  <win:auditeventpolicysubcategories_state comment="'Other System Events' is set to 'Success' and 'Failure'" id="oval:mil.disa.stig.windows:ste:11801" version="1">
+    <win:other_system_events datatype="string">AUDIT_SUCCESS_FAILURE</win:other_system_events>
+  </win:auditeventpolicysubcategories_state>
+</def-group>

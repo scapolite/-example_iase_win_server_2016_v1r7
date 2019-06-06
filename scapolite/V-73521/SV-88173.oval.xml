@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1089" version="1">
+    <metadata>
+      <title>WN16-CC-000140</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73521" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44468-7" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Early Launch Antimalware, Boot-Start Driver Initialization Policy must prevent boot drivers identified as bad.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Boot-Start Driver Initialization Policy' is not set to 'Enabled' with 'All' selected" test_ref="oval:mil.disa.stig.windows:tst:108900"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="Reg_Dword type and value equals 3" id="oval:mil.disa.stig.windows:ste:108901" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">3</win:value>
+  </win:registry_state>
+  <win:registry_state comment="Reg_Dword type and value equals 1" id="oval:mil.disa.stig.windows:ste:108900" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:108900" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">System\CurrentControlSet\Policies\EarlyLaunch</win:key>
+    <win:name datatype="string" operation="equals">DriverLoadPolicy</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="any_exist" comment="'Boot-Start Driver Initialization Policy' is not set to 'Enabled' with 'All' selected" id="oval:mil.disa.stig.windows:tst:108900" state_operator="OR" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:108900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:108900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:108901"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:108902"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 8" id="oval:mil.disa.stig.windows:ste:108902" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">8</win:value>
+  </win:registry_state>
+</def-group>

@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1238" version="1">
+    <metadata>
+      <title>WN16-UR-000050</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73739" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-45723-4" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Allow log on locally user right must only be assigned to the Administrators group.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Allow log on locally - Administrators" test_ref="oval:mil.disa.stig.windows:tst:123800"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_test check="all" comment="Allow log on locally - Administrators" id="oval:mil.disa.stig.windows:tst:123800" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:123801"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:123801"/>
+  </win:accesstoken_test>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:123800" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_state comment="Allow log on locally" id="oval:mil.disa.stig.windows:ste:123801" version="1">
+    <win:seinteractivelogonright datatype="boolean" operation="equals">0</win:seinteractivelogonright>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="Filter for Administrators" id="oval:mil.disa.stig.windows:obj:123801" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:123800</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:123800</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:123800" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+</def-group>

@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1229" version="1">
+    <metadata>
+      <title>User Account Control must be configured to detect application installations and prompt for elevation.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73715" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46912-2" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>User Account Control must be configured to detect application installations and prompt for elevation.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'User Account Control: Detect application installations and prompt for elevation' is set to 'Enabled'" test_ref="oval:mil.disa.stig.windows:tst:122900"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:460600" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Microsoft\Windows\CurrentVersion\Policies\System</win:key>
+    <win:name datatype="string">EnableInstallerDetection</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="Verifies 'User Account Control: Detect application installations and prompt for elevation' is set to 'Enabled'" id="oval:mil.disa.stig.windows:tst:122900" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:460600"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:122900"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 1" id="oval:mil.disa.stig.windows:ste:122900" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int">1</win:value>
+  </win:registry_state>
+</def-group>

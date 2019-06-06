@@ -1,0 +1,172 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:obj:487600'
+- 'oval:mil.disa.fso.windows:tst:487609'
+- 'oval:mil.disa.fso.windows:obj:487605'
+- 'oval:mil.disa.fso.windows:tst:487610'
+- 'oval:mil.disa.fso.windows:tst:487603'
+- 'oval:mil.disa.fso.windows:tst:487611'
+- 'oval:mil.disa.fso.windows:obj:487602'
+- 'oval:mil.disa.fso.windows:obj:487604'
+- 'oval:mil.disa.fso.windows:tst:487602'
+- 'oval:mil.disa.fso.windows:obj:487608'
+- 'oval:mil.disa.fso.windows:tst:487601'
+- 'oval:mil.disa.fso.windows:obj:487610'
+- 'oval:mil.disa.fso.windows:obj:487607'
+- 'oval:mil.disa.fso.windows:tst:487600'
+- 'oval:mil.disa.fso.windows:obj:487606'
+- 'oval:mil.disa.fso.windows:tst:487607'
+- 'oval:mil.disa.fso.windows:tst:487606'
+- 'oval:mil.disa.fso.windows:tst:487605'
+- 'oval:mil.disa.fso.windows:tst:487608'
+- 'oval:mil.disa.fso.windows:obj:487611'
+- 'oval:mil.disa.fso.windows:tst:487604'
+- 'oval:mil.disa.fso.windows:obj:487609'
+- 'oval:mil.disa.fso.windows:obj:487601'
+- 'oval:mil.disa.fso.windows:obj:487603'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1102" version="2">
+    <metadata>
+      <title>WN16-PK-000020</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <description>The DoD Interoperability Root CA cross-certificates must be installed in the Untrusted Certificates Store on unclassified systems.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="The DoD Interoperability Root CA cross-certificates must be installed in the Untrusted Certificates Store." definition_ref="oval:mil.disa.fso.windows:def:4876"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487600" version="3">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\22BBE981F0694D246CC1472ED2B021DC8540A22F</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" id="oval:mil.disa.fso.windows:tst:487609" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487609"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487605" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Disallowed\Certificates\FFAD03329B9E527A43EEC66A56F9CBB5393E6E13</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" id="oval:mil.disa.fso.windows:tst:487610" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487610"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" id="oval:mil.disa.fso.windows:tst:487603" version="4">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487603"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" id="oval:mil.disa.fso.windows:tst:487611" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487611"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487602" version="3">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\22BBE981F0694D246CC1472ED2B021DC8540A22F</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487604" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\FFAD03329B9E527A43EEC66A56F9CBB5393E6E13</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" id="oval:mil.disa.fso.windows:tst:487602" version="4">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487602"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487608" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\FCE1B1E25374DD94F5935BEB86CA643D8C8D1FF4</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" id="oval:mil.disa.fso.windows:tst:487601" version="4">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487601"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487610" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\FCE1B1E25374DD94F5935BEB86CA643D8C8D1FF4</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487607" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\EnterpriseCertificates\Disallowed\Certificates\FFAD03329B9E527A43EEC66A56F9CBB5393E6E13</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" id="oval:mil.disa.fso.windows:tst:487600" version="4">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487600"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487606" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\FFAD03329B9E527A43EEC66A56F9CBB5393E6E13</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" id="oval:mil.disa.fso.windows:tst:487607" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487607"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" id="oval:mil.disa.fso.windows:tst:487606" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487606"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" id="oval:mil.disa.fso.windows:tst:487605" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487605"/>
+  </win:registry_test>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" id="oval:mil.disa.fso.windows:tst:487608" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487608"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487611" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\EnterpriseCertificates\Disallowed\Certificates\FCE1B1E25374DD94F5935BEB86CA643D8C8D1FF4</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="all_exist" comment="The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" id="oval:mil.disa.fso.windows:tst:487604" version="2">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:487604"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487609" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Disallowed\Certificates\FCE1B1E25374DD94F5935BEB86CA643D8C8D1FF4</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487601" version="3">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Microsoft\EnterpriseCertificates\Disallowed\Certificates\22BBE981F0694D246CC1472ED2B021DC8540A22F</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <win:registry_object id="oval:mil.disa.fso.windows:obj:487603" version="3">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">SOFTWARE\Policies\Microsoft\EnterpriseCertificates\Disallowed\Certificates\22BBE981F0694D246CC1472ED2B021DC8540A22F</win:key>
+    <win:name datatype="string" operation="pattern match">^.+$</win:name>
+  </win:registry_object>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4876" version="5">
+    <metadata>
+      <title>WINPK-000003 DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate</title>
+      <affected family="windows">
+        <platform>Microsoft Windows 8</platform>
+      </affected>
+      <description>The DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate must be installed into the Untrusted Certificates Store.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criteria operator="OR">
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" test_ref="oval:mil.disa.fso.windows:tst:487600"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" test_ref="oval:mil.disa.fso.windows:tst:487601"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" test_ref="oval:mil.disa.fso.windows:tst:487602"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -22" test_ref="oval:mil.disa.fso.windows:tst:487603"/>
+      </criteria>
+      <criteria operator="OR">
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" test_ref="oval:mil.disa.fso.windows:tst:487604"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" test_ref="oval:mil.disa.fso.windows:tst:487605"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" test_ref="oval:mil.disa.fso.windows:tst:487606"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FF" test_ref="oval:mil.disa.fso.windows:tst:487607"/>
+      </criteria>
+      <criteria operator="OR">
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" test_ref="oval:mil.disa.fso.windows:tst:487608"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" test_ref="oval:mil.disa.fso.windows:tst:487609"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" test_ref="oval:mil.disa.fso.windows:tst:487610"/>
+        <criterion comment="Verifies the DoD Interoperability Root CA 1 to DoD Root CA 2 cross certificate is installed into the Untrusted Certificates Store -FC" test_ref="oval:mil.disa.fso.windows:tst:487611"/>
+      </criteria>
+    </criteria>
+  </definition>
+</def-group>

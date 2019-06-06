@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.fso.windows:obj:461301'
+- 'oval:mil.disa.fso.windows:tst:462600'
+- 'oval:mil.disa.fso.windows:obj:462600'
+- 'oval:mil.disa.fso.windows:var:461300'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1035" version="1">
+    <metadata>
+      <title>Software Certificate Installation Files - Windows 2016</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73271" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Software certificate installation files must be removed from a system.</description>
+    </metadata>
+    <criteria operator="AND">
+      <extend_definition comment="Windows2012 software cert installation file check." definition_ref="oval:mil.disa.fso.windows:def:4626"/>
+    </criteria>
+  </definition>
+  <win:wmi_object comment="All 'Local Disk' Volumes" id="oval:mil.disa.fso.windows:obj:461301" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string">SELECT name FROM win32_logicaldisk WHERE drivetype=3</win:wql>
+  </win:wmi_object>
+  <win:file_test check="none exist" check_existence="none_exist" comment="Software certificate installation files (*.p12 and *.pfx) are not present on the system" id="oval:mil.disa.fso.windows:tst:462600" version="1">
+    <win:object object_ref="oval:mil.disa.fso.windows:obj:462600"/>
+  </win:file_test>
+  <win:file_object comment="Local Volumes\*.p12 and *.pfx" id="oval:mil.disa.fso.windows:obj:462600" version="2">
+    <win:behaviors max_depth="-1" recurse_direction="down"/>
+    <win:path datatype="string" operation="equals" var_check="at least one" var_ref="oval:mil.disa.fso.windows:var:461300"/>
+    <win:filename datatype="string" operation="pattern match">^.*\.[Pp](12|[Ff][Xx])$</win:filename>
+  </win:file_object>
+  <local_variable comment="All 'local disk' volumes, in X:\ format" datatype="string" id="oval:mil.disa.fso.windows:var:461300" version="1">
+    <end character="\">
+      <object_component item_field="result" object_ref="oval:mil.disa.fso.windows:obj:461301"/>
+    </end>
+  </local_variable>
+  <definition class="compliance" id="oval:mil.disa.fso.windows:def:4626" version="1">
+    <metadata>
+      <title>Software Certificate Installation Files</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="15823" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Software certificate installation files must be removed from a system.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies certificate installation files (*.p12 and *.pfx) are not present on the system" test_ref="oval:mil.disa.fso.windows:tst:462600"/>
+    </criteria>
+  </definition>
+</def-group>

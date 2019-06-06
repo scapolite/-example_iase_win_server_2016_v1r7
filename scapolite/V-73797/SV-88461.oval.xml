@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1254" version="1">
+    <metadata>
+      <title>WN16-UR-000280</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73797" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46126-9" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Perform volume maintenance tasks user right must only be assigned to the Administrators group.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Perform volume maintenance tasks - Administrators" test_ref="oval:mil.disa.stig.windows:tst:125400"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_state comment="Perform volume maintenance tasks" id="oval:mil.disa.stig.windows:ste:125400" version="1">
+    <win:semanagevolumeprivilege datatype="boolean" operation="equals">0</win:semanagevolumeprivilege>
+  </win:accesstoken_state>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:125401" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_object comment="Filter for Administrators" id="oval:mil.disa.stig.windows:obj:125400" version="1">
+    <set set_operator="UNION">
+      <object_reference>oval:mil.disa.stig.windows:obj:125401</object_reference>
+      <filter>oval:mil.disa.stig.windows:ste:125401</filter>
+    </set>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Administrators" id="oval:mil.disa.stig.windows:ste:125401" version="1">
+    <win:security_principle datatype="string" operation="equals">Administrators</win:security_principle>
+  </win:accesstoken_state>
+  <win:accesstoken_test check="all" comment="Perform volume maintenance tasks - Administrators" id="oval:mil.disa.stig.windows:tst:125400" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:125400"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:125400"/>
+  </win:accesstoken_test>
+</def-group>

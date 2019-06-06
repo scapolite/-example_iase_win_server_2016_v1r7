@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:tst:101000'
+- 'oval:mil.disa.stig.windows:ste:101000'
+- 'oval:mil.disa.stig.windows:obj:101000'
+- 'oval:mil.disa.stig.windows:def:1010'
+- 'oval:mil.disa.stig.windows:ste:101001'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1131" version="1">
+    <metadata>
+      <title>Kerberos - Service Ticket Lifetime</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="73361" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-45630-1" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Kerberos Policy - Maximum lifetime for service ticket must be 600 or less, but not equal 0</description>
+    </metadata>
+    <criteria comment="IF system is a domain controller THEN check maximum service ticket lifetime" operator="OR">
+      <extend_definition comment="IF system is a domain controller" definition_ref="oval:mil.disa.stig.windows:def:1010" negate="true"/>
+      <criteria comment="THEN check maximum service ticket lifetime" operator="AND">
+        <criterion comment="Kerberos Policy - Maximum lifetime for service ticket - Ticket expires" test_ref="oval:mil.disa.stig.windows:tst:113101"/>
+        <criterion comment="Kerberos Policy - Maximum lifetime for service ticket - 600 minutes or less" test_ref="oval:mil.disa.stig.windows:tst:113100"/>
+      </criteria>
+    </criteria>
+  </definition>
+  <win:wmi57_test check="all" check_existence="at_least_one_exists" comment="Kerberos Policy - Maximum lifetime for service ticket - Ticket expires" id="oval:mil.disa.stig.windows:tst:113101" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113101"/>
+  </win:wmi57_test>
+  <win:wmi57_test check="all" check_existence="at_least_one_exists" comment="System is a DC" id="oval:mil.disa.stig.windows:tst:101000" state_operator="OR" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:101000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:101000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:101001"/>
+  </win:wmi57_test>
+  <win:wmi57_object comment="Kerberos Policy - Maximum lifetime for service ticket must be 600 or less" id="oval:mil.disa.stig.windows:obj:113100" version="1">
+    <win:namespace datatype="string">root\rsop\computer</win:namespace>
+    <win:wql datatype="string">SELECT setting FROM RSOP_SecuritySettingNumeric WHERE KeyName='MaxServiceAge'</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_state comment="Maximum lifetime for service ticket lte 600" id="oval:mil.disa.stig.windows:ste:113100" version="1">
+    <win:result datatype="record" operation="equals">
+      <field datatype="int" name="setting" operation="less than or equal">600</field>
+    </win:result>
+  </win:wmi57_state>
+  <win:wmi57_test check="all" check_existence="at_least_one_exists" comment="Kerberos Policy - Maximum lifetime for service ticket - 600 minutes or less" id="oval:mil.disa.stig.windows:tst:113100" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:113100"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:113100"/>
+  </win:wmi57_test>
+  <win:wmi57_state comment="Primary DC is 5" id="oval:mil.disa.stig.windows:ste:101000" version="1">
+    <win:result datatype="record" operation="equals">
+      <field name="domainrole">5</field>
+    </win:result>
+  </win:wmi57_state>
+  <win:wmi57_object comment="DomainRole property" id="oval:mil.disa.stig.windows:obj:101000" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT DomainRole FROM win32_computersystem</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_state comment="Maximum lifetime for service ticket policy ne 0, returns -1 in policy auditor" id="oval:mil.disa.stig.windows:ste:113101" version="1">
+    <win:result datatype="record" operation="equals">
+      <field datatype="int" name="setting" operation="not equal">-1</field>
+    </win:result>
+  </win:wmi57_state>
+  <definition class="inventory" id="oval:mil.disa.stig.windows:def:1010" version="1">
+    <metadata>
+      <title>The system is a DC.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="cpe:/o:microsoft:windows_server_2016:-" source="CPE"/>
+      <description>The Windows Server 2016 system is a domain controller.</description>
+    </metadata>
+    <criteria>
+      <criterion comment="System is a DC" test_ref="oval:mil.disa.stig.windows:tst:101000"/>
+    </criteria>
+  </definition>
+  <win:wmi57_state comment="Backup DC is 4" id="oval:mil.disa.stig.windows:ste:101001" version="1">
+    <win:result datatype="record" operation="equals">
+      <field name="domainrole">4</field>
+    </win:result>
+  </win:wmi57_state>
+</def-group>

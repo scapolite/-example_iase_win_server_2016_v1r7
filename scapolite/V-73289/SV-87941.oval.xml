@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:ste:104101'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1042" version="2">
+    <metadata>
+      <title>The Microsoft FTP service must not be installed unless required.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73289" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Check to make sure the FTP server role is not present." test_ref="oval:mil.disa.stig.windows:tst:104201"/>
+      <criterion comment="Check to make sure the FTP server role is disabled." test_ref="oval:mil.disa.stig.windows:tst:104202"/>
+    </criteria>
+  </definition>
+  <win:wmi57_object comment="FTP Server" id="oval:mil.disa.stig.windows:obj:104201" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT startmode FROM Win32_Service WHERE name='ftpsvc'</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_state comment="StartMode is Disabled" id="oval:mil.disa.stig.windows:ste:104101" version="3">
+    <win:result datatype="record" operation="equals">
+      <field name="startmode">Disabled</field>
+    </win:result>
+  </win:wmi57_state>
+  <win:wmi57_test check="at least one" comment="Check to make sure the FTP server role is disabled." id="oval:mil.disa.stig.windows:tst:104202" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:104201"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:104101"/>
+  </win:wmi57_test>
+  <win:wmi57_test check="at least one" check_existence="none_exist" comment="Check to make sure the FTP server role is not present." id="oval:mil.disa.stig.windows:tst:104201" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:104201"/>
+  </win:wmi57_test>
+</def-group>

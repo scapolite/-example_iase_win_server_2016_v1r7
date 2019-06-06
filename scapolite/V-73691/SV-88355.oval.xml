@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1217" version="1">
+    <metadata>
+      <title>LanMan Authentication Level</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2012</platform>
+      </affected>
+      <reference ref_id="1153" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46565-8" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The LanMan authentication level must be set to send NTLMv2 response only, and to refuse LM and NTLM.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Network security: LAN Manager authentication level' is set to 'Send NTLMv2 response only. Refuse LM &amp; NTLM'" test_ref="oval:mil.disa.stig.windows:tst:121700"/>
+    </criteria>
+  </definition>
+  <win:registry_object comment="Check for the the value HKLM\SYSTEM\CurrentControlSet\Control\Lsa\LmCompatibilityLevel" id="oval:mil.disa.stig.windows:obj:121700" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SYSTEM\CurrentControlSet\Control\Lsa</win:key>
+    <win:name datatype="string">LmCompatibilityLevel</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Network security: LAN Manager authentication level' is set to 'Send NTLMv2 response only. Refuse LM &amp; NTLM'" id="oval:mil.disa.stig.windows:tst:121700" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:121700"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:121700"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 5" id="oval:mil.disa.stig.windows:ste:121700" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">5</win:value>
+  </win:registry_state>
+</def-group>

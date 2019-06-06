@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1085" version="1">
+    <metadata>
+      <title>Disable IP Source Routing</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73501" ref_url="http://iase.disa.mil/stigs/srr/index.html" source="DISA"/>
+      <reference ref_id="CCE-45276-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Source routing must be configured to the highest protection level to prevent Internet Protocol (IP) source routing.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'MSS: (DisableIPSourceRouting) IP source routing protection level (protects against packet spoofing)' is set to 'Highest protection, source routing is completely disabled'" test_ref="oval:mil.disa.stig.windows:tst:108500"/>
+    </criteria>
+  </definition>
+  <external_variable comment="MSS: (DisableIPSourceRouting) IP source routing protection level (protects against packet spoofing)" datatype="int" id="oval:mil.disa.stig.windows:var:108500" version="1">
+    <possible_value hint="source_routing_packets_allowed">0</possible_value>
+    <possible_value hint="source_routing_packets_ignored">1</possible_value>
+    <possible_value hint="source_routing_packets_disabled">2</possible_value>
+  </external_variable>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'MSS: (DisableIPSourceRouting) IP source routing protection level (protects against packet spoofing)' is set to 'Highest protection, source routing is completely disabled'" id="oval:mil.disa.stig.windows:tst:108500" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:108500"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:108500"/>
+  </win:registry_test>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:108500" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">System\CurrentControlSet\Services\Tcpip\Parameters</win:key>
+    <win:name datatype="string">DisableIPSourceRouting</win:name>
+  </win:registry_object>
+  <win:registry_state comment="Reg_Dword type and value equals variable" id="oval:mil.disa.stig.windows:ste:108500" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" var_ref="oval:mil.disa.stig.windows:var:108500"/>
+  </win:registry_state>
+</def-group>

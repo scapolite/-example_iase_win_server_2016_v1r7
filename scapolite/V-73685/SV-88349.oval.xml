@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1214" version="1">
+    <metadata>
+      <title>Kerberos Encryption Types</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="21954" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-44602-1" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Kerberos encryption types must be configured to prevent the use of DES and RC4 encryption suites.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Network Security: Configure encryption types allowed for Kerberos' is set to 'Enabled' with 'AES128_HMAC_SHA1', 'AES256_HMAC_SHA1', 'Future encryption types'" test_ref="oval:mil.disa.stig.windows:tst:121400"/>
+    </criteria>
+  </definition>
+  <win:registry_object comment="Check registry value HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters\SupportedEncryptionTypes" id="oval:mil.disa.stig.windows:obj:121400" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters</win:key>
+    <win:name datatype="string">SupportedEncryptionTypes</win:name>
+  </win:registry_object>
+  <win:registry_state comment="Reg_Dword type and value equals 2147483640" id="oval:mil.disa.stig.windows:ste:121400" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">2147483640</win:value>
+  </win:registry_state>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Network Security: Configure encryption types allowed for Kerberos' is set to 'Enabled' with 'RC4_HMAC_MD5', 'AES128_HMAC_SHA1', 'AES256_HMAC_SHA1', 'Future encryption types'" id="oval:mil.disa.stig.windows:tst:121400" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:121400"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:121400"/>
+  </win:registry_test>
+</def-group>

@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1119" version="1">
+    <metadata>
+      <title>WN16-CC-000450</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73583" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46993-2" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>Users must be prevented from changing installation options.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Enable user control over installs' is set to 'Disabled'" test_ref="oval:mil.disa.stig.windows:tst:111900"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="Reg_Dword type and value equals variable" id="oval:mil.disa.stig.windows:ste:111900" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals" var_ref="oval:mil.disa.stig.windows:var:111900"/>
+  </win:registry_state>
+  <external_variable comment="Allow user control over installs" datatype="int" id="oval:mil.disa.stig.windows:var:111900" version="1">
+    <possible_value hint="disabled">0</possible_value>
+    <possible_value hint="enabled">1</possible_value>
+  </external_variable>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:111900" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">Software\Policies\Microsoft\Windows\Installer</win:key>
+    <win:name datatype="string" operation="equals">EnableUserControl</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Enable user control over installs' is set to 'Disabled'" id="oval:mil.disa.stig.windows:tst:111900" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:111900"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:111900"/>
+  </win:registry_test>
+</def-group>

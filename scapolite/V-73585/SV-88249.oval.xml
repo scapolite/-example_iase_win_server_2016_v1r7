@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1120" version="1">
+    <metadata>
+      <title>WN16-CC-000460</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73585" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-47225-8" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Windows Installer Always install with elevated privileges must be disabled.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Verifies 'Always install with elevated privileges' is set to 'Disabled'" test_ref="oval:mil.disa.stig.windows:tst:112000"/>
+    </criteria>
+  </definition>
+  <win:registry_object id="oval:mil.disa.stig.windows:obj:112000" version="1">
+    <win:hive datatype="string" operation="equals">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string" operation="equals">Software\Policies\Microsoft\Windows\Installer</win:key>
+    <win:name datatype="string" operation="equals">AlwaysInstallElevated</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Always install with elevated privileges' is set to 'Disabled'" id="oval:mil.disa.stig.windows:tst:112000" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:112000"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:112000"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Dword type and value equals 0" id="oval:mil.disa.stig.windows:ste:112000" version="1">
+    <win:type>reg_dword</win:type>
+    <win:value datatype="int" operation="equals">0</win:value>
+  </win:registry_state>
+</def-group>

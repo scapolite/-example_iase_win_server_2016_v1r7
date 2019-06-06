@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1197" version="1">
+    <metadata>
+      <title>Smart Card Removal Option</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="1157" ref_url="http://iase.disa.mil/stigs/srr/index.html" source="DISA"/>
+      <reference ref_id="CCE-46148-3" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Smart Card removal option must be configured to Force Logoff or Lock Workstation.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Verifies 'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation'" test_ref="oval:mil.disa.stig.windows:tst:119700"/>
+      <criterion comment="Verifies 'Interactive logon: Smart card removal behavior' is set to 'Force Logoff'" test_ref="oval:mil.disa.stig.windows:tst:119701"/>
+    </criteria>
+  </definition>
+  <win:registry_state comment="Reg_Sz type and value equals 1" id="oval:mil.disa.stig.windows:ste:119700" version="1">
+    <win:type>reg_sz</win:type>
+    <win:value datatype="int" operation="equals">1</win:value>
+  </win:registry_state>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Interactive logon: Smart card removal behavior' is set to 'Force Logoff'" id="oval:mil.disa.stig.windows:tst:119701" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:119700"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:119701"/>
+  </win:registry_test>
+  <win:registry_object comment="Check value stored at HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\scremoveoption" id="oval:mil.disa.stig.windows:obj:119700" version="1">
+    <win:hive datatype="string">HKEY_LOCAL_MACHINE</win:hive>
+    <win:key datatype="string">Software\Microsoft\Windows NT\CurrentVersion\Winlogon</win:key>
+    <win:name datatype="string">scremoveoption</win:name>
+  </win:registry_object>
+  <win:registry_test check="all" check_existence="at_least_one_exists" comment="'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation'" id="oval:mil.disa.stig.windows:tst:119700" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:119700"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:119700"/>
+  </win:registry_test>
+  <win:registry_state comment="Reg_Sz type and value equals 2" id="oval:mil.disa.stig.windows:ste:119701" version="1">
+    <win:type>reg_sz</win:type>
+    <win:value datatype="int" operation="equals">2</win:value>
+  </win:registry_state>
+</def-group>

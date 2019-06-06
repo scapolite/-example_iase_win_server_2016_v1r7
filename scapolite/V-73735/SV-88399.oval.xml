@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<def-group>
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1237" version="1">
+    <metadata>
+      <title>WN16-UR-000030</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73735" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <reference ref_id="CCE-46917-1" ref_url="http://cce.mitre.org" source="CCE"/>
+      <description>The Act as part of the operating system user right must not be assigned to any groups or accounts.</description>
+    </metadata>
+    <criteria operator="AND">
+      <criterion comment="Act as part of the operating system - None" test_ref="oval:mil.disa.stig.windows:tst:123700"/>
+    </criteria>
+  </definition>
+  <win:accesstoken_test check="all" comment="Act as part of the operating system - None" id="oval:mil.disa.stig.windows:tst:123700" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:123700"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:123700"/>
+  </win:accesstoken_test>
+  <win:accesstoken_object comment="All security principles" id="oval:mil.disa.stig.windows:obj:123700" version="1">
+    <win:security_principle datatype="string" operation="pattern match">.*</win:security_principle>
+  </win:accesstoken_object>
+  <win:accesstoken_state comment="Act as part of the operating system" id="oval:mil.disa.stig.windows:ste:123700" version="1">
+    <win:setcbprivilege datatype="boolean" operation="equals">0</win:setcbprivilege>
+  </win:accesstoken_state>
+</def-group>

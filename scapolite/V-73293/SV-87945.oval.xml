@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<def-group>
+  <!--ATTENTION: some OVAL entities defined below ALSO OCCUR in OVAL definitions
+for other rules - a mechanism generating SCAP from these sources must ensure that
+multiple definitions of the same entity are exactly the same.
+When using 'localized' per-rule OVAL, as encouraged by the Scapolite format
+it is probaly preferable to structure OVAL differently and work with shared OVAL files.
+The OVAL presented here has been exported automatically but no such optimization
+using shared OVAL files has been carried out.
+Here is the list of identifies for OVAL entities that also occur in other rules:
+ - 'oval:mil.disa.stig.windows:ste:104101'  -->
+  <definition class="compliance" id="oval:mil.disa.stig.windows:def:1044" version="2">
+    <metadata>
+      <title>Simple TCP/IP Services must not be installed.</title>
+      <affected family="windows">
+        <platform>Microsoft Windows Server 2016</platform>
+      </affected>
+      <reference ref_id="73293" ref_url="http://iase.disa.mil/stigs/SRR/index.html" source="DISA"/>
+      <description>Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption or may provide unauthorized access to the system.</description>
+    </metadata>
+    <criteria operator="OR">
+      <criterion comment="Check to make sure the Simple TCP/IP Services server feature is not present." test_ref="oval:mil.disa.stig.windows:tst:104401"/>
+      <criterion comment="Check to make sure the Simple TCP/IP Services server feature is disabled." test_ref="oval:mil.disa.stig.windows:tst:104402"/>
+    </criteria>
+  </definition>
+  <win:wmi57_object comment="Simple TCP/IP Services" id="oval:mil.disa.stig.windows:obj:104401" version="1">
+    <win:namespace datatype="string">root\cimv2</win:namespace>
+    <win:wql datatype="string" operation="equals">SELECT startmode FROM Win32_Service WHERE name='simptcp'</win:wql>
+  </win:wmi57_object>
+  <win:wmi57_test check="at least one" check_existence="none_exist" comment="Check to make sure the Simple TCP/IP Services server feature is not present." id="oval:mil.disa.stig.windows:tst:104401" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:104401"/>
+  </win:wmi57_test>
+  <win:wmi57_test check="at least one" comment="Check to make sure the Simple TCP/IP Services server feature is disabled." id="oval:mil.disa.stig.windows:tst:104402" version="1">
+    <win:object object_ref="oval:mil.disa.stig.windows:obj:104401"/>
+    <win:state state_ref="oval:mil.disa.stig.windows:ste:104101"/>
+  </win:wmi57_test>
+  <win:wmi57_state comment="StartMode is Disabled" id="oval:mil.disa.stig.windows:ste:104101" version="3">
+    <win:result datatype="record" operation="equals">
+      <field name="startmode">Disabled</field>
+    </win:result>
+  </win:wmi57_state>
+</def-group>
