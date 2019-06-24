@@ -12,7 +12,7 @@ on improving authoring and maintenance of SCAP content as manageable
 text files under version control such as practiced by Red Hat's
 [Compliance-as-Code project](https://github.com/ComplianceAsCode/content) and Siemens'
 [Scapolite
-format](https://github.com/scapolite/docs/raw/master/201905_scap_v2_workshop/grobauer_siemens_scap_v2_experiences_scapolite.pdf)
+format](https://github.com/scapolite/scapolite_docs/raw/master/201905_scap_v2_workshop/grobauer_siemens_scap_v2_experiences_scapolite.pdf)
 
 The participants agreed that Siemens' Scapolite format looked like a promising candidate to be used as basis for a standard format and that it should be further evaluated. As first step in this evaluation, a complete example of
 SCAP content maintained in Scapolite rather than XCCDF+OVAL should be published.
@@ -65,13 +65,13 @@ SCAP datastream into the Scapolite format:
     maintaining content in Scapolite for authors and maintainers and
     exporting to SCAP for consumption by SCAP checkers.
 
-Please refer to the [slide set about Scapolite](https://github.com/scapolite/docs/raw/master/201905_scap_v2_workshop/grobauer_siemens_scap_v2_experiences_scapolite.pdf)
+Please refer to the [slide set about Scapolite](https://github.com/scapolite/scapolite_docs/raw/master/201905_scap_v2_workshop/grobauer_siemens_scap_v2_experiences_scapolite.pdf)
 that has been presented at NIST's SCAP v2 workshop for more information about Scapolite.
 
 The machine-readable information on how to implement the settings
 is **not** part of the original IASE DISA STIG; the information
 has been added using the mechanisms described in the
-[slide set about automating implementation](https://github.com/scapolite/docs/raw/master/201905_scap_v2_workshop/stoeckle_tum_scap_v2_scapolite_automated_implementation.pdf)
+[slide set about automating implementation](https://github.com/scapolite/scapolite_docs/raw/master/201905_scap_v2_workshop/stoeckle_tum_scap_v2_scapolite_automated_implementation.pdf)
 that has been presented at NIST's SCAP v2 workshop, too.
 
 **ATTENTION**
