@@ -896,13 +896,13 @@ IASE Windows Server 2016 STIG V1R7
 
 SCAP datastream into the Scapolite format.
 
-Please refer to the [slide set about Scapolite](https://github.com/scapolite/docs/raw/master/201905_scap_v2_workshop/grobauer_siemens_scap_v2_experiences_scapolite.pdf)
+Please refer to the [slide set about Scapolite](https://github.com/scapolite/scapolite_docs/raw/master/201905_scap_v2_workshop/grobauer_siemens_scap_v2_experiences_scapolite.pdf)
 that has been presented at NIST's SCAP v2 workshop for more information about Scapolite.
 
 The machine-readable information on how to implement the settings
 is *not* part of the original IASE DISA STIG; the information
 has been added using the mechanisms described in the
-[slide set about automating implementation](https://github.com/scapolite/docs/raw/master/201905_scap_v2_workshop/stoeckle_tum_scap_v2_scapolite_automated_implementation.pdf)
+[slide set about automating implementation](https://github.com/scapolite/scapolite_docs/raw/master/201905_scap_v2_workshop/stoeckle_tum_scap_v2_scapolite_automated_implementation.pdf)
 that has been presented at NIST's SCAP v2 workshop.
 
 Copyright holder for the contents of the IASE Windows Server 2016 STIG V1R7, is IASE DISA,
